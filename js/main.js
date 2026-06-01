@@ -1,12 +1,12 @@
-const audio = new Audio("resources/audio/placeholder.mp4");
+import {getAudioTime, playAudio} from "./audio.js";
 
 $("#start-btn").click(function () {
-    audio.play();
+    playAudio();
 })
 
-addEventListener("keyup", logKeyPressed)
+addEventListener("keydown", logKeyPressed)
 
 function logKeyPressed(event) {
-    const time = audio.currentTime;
+    const time = getAudioTime();
     console.log(event.key, "Pressed at", time)
 }
