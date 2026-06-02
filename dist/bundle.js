@@ -201,10 +201,10 @@
   }
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      playAudio();
+      pauseAudio();
       cancelAnimationFrame(rafId);
     } else {
-      pauseAudio();
+      playAudio();
       rafId = requestAnimationFrame(gameLoop);
     }
   });
