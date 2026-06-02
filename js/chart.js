@@ -17,7 +17,7 @@ class Lane {
 const chart = {
     "lanes": [
         new Lane([{"hitTime": 6}, {"hitTime": 7}]),
-        new Lane([{"hitTime": 5,}, {"hitTime": 7}])
+        new Lane([{"hitTime": 5}, {"hitTime": 7}])
     ],
 }
 
