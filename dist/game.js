@@ -39,7 +39,7 @@
   var NUM_LANES = 5;
   var KEYBINDS = {
     "a": 0,
-    "w": 1,
+    "s": 1,
     "d": 2,
     "ArrowLeft": 3,
     "ArrowRight": 4
