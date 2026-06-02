@@ -12,22 +12,23 @@
   }
 
   // js/chart.js
-  var chart = {
-    "notes": [
-      {
-        "hitTime": 6
-      },
-      {
-        "hitTime": 7
-      }
-    ],
-    "index": 0,
-    "next": function() {
+  var Lane = class {
+    index = 0;
+    constructor(notes) {
+      this.notes = notes;
+    }
+    next() {
       return this.notes[this.index];
-    },
-    "incrementIndex": function() {
+    }
+    incrementIndex() {
       this.index++;
     }
+  };
+  var chart = {
+    "lanes": [
+      new Lane([{ "hitTime": 6 }, { "hitTime": 7 }]),
+      new Lane([{ "hitTime": 5 }, { "hitTime": 7 }])
+    ]
   };
   var chart_default = chart;
 
@@ -107,10 +108,13 @@
     addPoints(hitType);
   }
   function spawnNotes(audioTime) {
-    while (chart_default.next() && chart_default.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-      activeNotes.push(chart_default.next());
-      chart_default.incrementIndex();
-    }
+    chart_default.lanes.forEach((lane) => {
+      while (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
+        console.log("spawning notes");
+        activeNotes.push(lane.next());
+        lane.incrementIndex();
+      }
+    });
   }
   function dropOldNotes(audioTime) {
     activeNotes = activeNotes.filter((note) => audioTime < note.hitTime + DROP_AFTER_SECONDS);

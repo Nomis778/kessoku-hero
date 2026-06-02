@@ -6,7 +6,11 @@ const SPAWN_BEFORE_SECONDS = 2;
 export const FALL_TIME_SECONDS = 1.5;
 const DROP_AFTER_SECONDS = 1;
 
-let activeNotes = [];
+// Each element is a list of notes in this lane
+let lanes = [];
+for(let i = 1; i < chart.lanes.length; i++) {
+    lanes[i] = [];
+}
 
 export function updateState(audioTime) {
     spawnNotes(audioTime);
@@ -17,8 +21,8 @@ export function getActiveNotes() {
     return activeNotes;
 }
 
-export function registerHit(hitTime) {
-    const note = getClosestNote(hitTime)
+export function registerHit(hitTime, lane) {
+    const note = getClosestNote(hitTime, lane)
     if (!note)
         return;
 
@@ -26,26 +30,33 @@ export function registerHit(hitTime) {
     const hitType = getHitType(diff)
 
     if(hitType !== HitType.MISS)
-        removeNote(note);
+        removeNote(note, lane);
 
     addPoints(hitType)
 }
 
 function spawnNotes(audioTime) {
-    while (chart.next() && chart.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-        activeNotes.push(chart.next());
-        chart.incrementIndex();
+    for(let i = 0; i < chart.lanes.length; i++) {
+        const lane = chart.lanes[i];
+        if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
+            lanes[i].push(lane.next());
+            lane.incrementIndex();
+        }
     }
 }
 
 function dropOldNotes(audioTime) {
-    activeNotes = activeNotes.filter(note => (audioTime < note.hitTime + DROP_AFTER_SECONDS));
+    lanes.forEach(lane => {
+        while (lane.length && (audioTime <= lane[0].hitTime + DROP_AFTER_SECONDS)) {
+            lane.shift();
+        }
+    });
 }
 
-function getClosestNote(audioTime) {
-    let closest = null
-    let closestDiff = Number.MAX_VALUE
-    activeNotes.forEach(note => {
+function getClosestNote(audioTime, lane) {
+    let closest = null;
+    let closestDiff = Number.MAX_VALUE;
+    lanes[lane].forEach(note => {
         const diff = Math.abs(note.hitTime - audioTime);
         if(diff < closestDiff) {
             closest = note;
@@ -55,6 +66,6 @@ function getClosestNote(audioTime) {
     return closest;
 }
 
-function removeNote(note){
-    activeNotes.splice(activeNotes.indexOf(note), 1);
+function removeNote(note, lane){
+    lanes[lane].splice(lanes.indexOf(note), 1);
 }

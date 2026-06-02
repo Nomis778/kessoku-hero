@@ -1,21 +1,25 @@
-const chart = {
-    "notes": [
-        {
-            "hitTime": 6
-        },
-        {
-            "hitTime": 7
-        }
-    ],
-    "index": 0,
+class Lane {
+    index = 0;
 
-    "next": function () {
+    constructor(notes) {
+        this.notes = notes;
+    };
+
+    next() {
         return this.notes[this.index]
-    },
+    }
 
-    "incrementIndex": function () {
+    incrementIndex() {
         this.index++
     }
 }
 
+const chart = {
+    "lanes": [
+        new Lane([{"hitTime": 6}, {"hitTime": 7}]),
+        new Lane([{"hitTime": 5,}, {"hitTime": 7}])
+    ],
+}
+
 export default chart
+
