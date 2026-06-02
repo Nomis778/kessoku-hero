@@ -1,16 +1,18 @@
 import {getAudioTime, pauseAudio, playAudio} from "./audio.js";
 import updateCanvas from "./graphics";
-import {updateState} from "./state";
+import {registerHit, updateState} from "./state";
+import {getPoints} from "./score";
 
 $("#start-btn").click(function () {
     playAudio();
 });
 
-addEventListener("keydown", logKeyPressed);
+addEventListener("keydown", onKeyPress);
 
-function logKeyPressed(event) {
-    const time = getAudioTime();
-    console.log(event.key, "Pressed at", time);
+function onKeyPress(event) {
+    const audioTime = getAudioTime();
+    registerHit(audioTime);
+    console.log(getPoints());
 }
 
 let rafId = requestAnimationFrame(gameLoop);

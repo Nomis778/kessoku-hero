@@ -1,4 +1,3 @@
-import {getClosestNote} from "./state";
 import {HitType} from "./hit-type";
 
 const Reward = {
@@ -26,4 +25,8 @@ export function addPoints(hitType) {
             totalPoints += Reward.MISS;
             break;
     }
+}
+
+export function getPoints() {
+    return totalPoints;
 }

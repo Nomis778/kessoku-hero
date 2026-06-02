@@ -31,6 +31,59 @@
   };
   var chart_default = chart;
 
+  // js/hit-type.js
+  var PERFECT_DIFF = 0.1;
+  var GOOD_DIFF = 0.3;
+  var MEDIOCRE_DIFF = 0.5;
+  var MISS_DIFF = 2;
+  var HitType = {
+    PERFECT: 1,
+    GOOD: 2,
+    MEDIOCRE: 3,
+    MISS: 4
+  };
+  Object.freeze(HitType);
+  function getHitType(diff) {
+    if (diff < PERFECT_DIFF) {
+      return HitType.PERFECT;
+    } else if (diff < GOOD_DIFF) {
+      return HitType.GOOD;
+    } else if (diff < MEDIOCRE_DIFF) {
+      return HitType.MEDIOCRE;
+    } else if (diff < MISS_DIFF) {
+      return HitType.MISS;
+    }
+  }
+
+  // js/score.js
+  var Reward = {
+    "PERFECT": 400,
+    "GOOD": 200,
+    "MEDIOCRE": 100,
+    "MISS": -100
+  };
+  Object.freeze(Reward);
+  var totalPoints = 0;
+  function addPoints(hitType) {
+    switch (hitType) {
+      case HitType.PERFECT:
+        totalPoints += Reward.PERFECT;
+        break;
+      case HitType.GOOD:
+        totalPoints += Reward.GOOD;
+        break;
+      case HitType.MEDIOCRE:
+        totalPoints += Reward.MEDIOCRE;
+        break;
+      case HitType.MISS:
+        totalPoints += Reward.MISS;
+        break;
+    }
+  }
+  function getPoints() {
+    return totalPoints;
+  }
+
   // js/state.js
   var SPAWN_BEFORE_SECONDS = 2;
   var FALL_TIME_SECONDS = 1.5;
@@ -38,20 +91,44 @@
   var activeNotes = [];
   function updateState(audioTime) {
     spawnNotes(audioTime);
-    dropNotes(audioTime);
+    dropOldNotes(audioTime);
   }
   function getActiveNotes() {
     return activeNotes;
   }
+  function registerHit(hitTime) {
+    const note = getClosestNote(hitTime);
+    if (!note)
+      return;
+    const diff = Math.abs(note.hitTime - hitTime);
+    const hitType = getHitType(diff);
+    if (hitType !== HitType.MISS)
+      removeNote(note);
+    addPoints(hitType);
+  }
   function spawnNotes(audioTime) {
     while (chart_default.next() && chart_default.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-      chart_default.next().isHit = false;
       activeNotes.push(chart_default.next());
       chart_default.incrementIndex();
     }
   }
-  function dropNotes(audioTime) {
-    activeNotes = activeNotes.filter((note) => note.isHit === true || audioTime < note.hitTime + DROP_AFTER_SECONDS);
+  function dropOldNotes(audioTime) {
+    activeNotes = activeNotes.filter((note) => audioTime < note.hitTime + DROP_AFTER_SECONDS);
+  }
+  function getClosestNote(audioTime) {
+    let closest = null;
+    let closestDiff = Number.MAX_VALUE;
+    activeNotes.forEach((note) => {
+      const diff = Math.abs(note.hitTime - audioTime);
+      if (diff < closestDiff) {
+        closest = note;
+        closestDiff = diff;
+      }
+    });
+    return closest;
+  }
+  function removeNote(note) {
+    activeNotes.splice(activeNotes.indexOf(note), 1);
   }
 
   // js/graphics.js
@@ -82,10 +159,11 @@
   $("#start-btn").click(function() {
     playAudio();
   });
-  addEventListener("keydown", logKeyPressed);
-  function logKeyPressed(event) {
-    const time = getAudioTime();
-    console.log(event.key, "Pressed at", time);
+  addEventListener("keydown", onKeyPress);
+  function onKeyPress(event) {
+    const audioTime = getAudioTime();
+    registerHit(audioTime);
+    console.log(getPoints());
   }
   var rafId = requestAnimationFrame(gameLoop);
   function gameLoop() {
