@@ -15,14 +15,11 @@ export const SPAWN_BEFORE_SECONDS = 2;
 export const FALL_TIME_SECONDS = 1.5;
 export const DROP_AFTER_SECONDS = 1;
 
-// Graphics
-export const HIT_Y = 650;
-export const NOTE_WIDTH = 50;
-export const NOTE_HEIGHT = 25;
-export const LANE_WIDTH = 100;
-export const NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
-export const CANVAS_PADDING = 50;
-export const CANVAS_WIDTH = (CANVAS_PADDING * 2) + (LANE_WIDTH * NUM_LANES);
+// Graphics, calculated from what works at 600 width and 900 height
+export const HIT_Y_RATIO = 700 / 900;
+export const NOTE_W_RATIO = 60 / 100; // 100 lane width
+export const NOTE_H_RATIO = 35 / 900;
+export const CANVAS_PAD_RATIO = 50 / 600;
 
 // Colors
 export const NOTE_COLOR = "#FFF600";

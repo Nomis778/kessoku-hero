@@ -47,13 +47,10 @@
   var SPAWN_BEFORE_SECONDS = 2;
   var FALL_TIME_SECONDS = 1.5;
   var DROP_AFTER_SECONDS = 1;
-  var HIT_Y = 650;
-  var NOTE_WIDTH = 50;
-  var NOTE_HEIGHT = 25;
-  var LANE_WIDTH = 100;
-  var NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
-  var CANVAS_PADDING = 50;
-  var CANVAS_WIDTH = CANVAS_PADDING * 2 + LANE_WIDTH * NUM_LANES;
+  var HIT_Y_RATIO = 700 / 900;
+  var NOTE_W_RATIO = 60 / 100;
+  var NOTE_H_RATIO = 35 / 900;
+  var CANVAS_PAD_RATIO = 50 / 600;
   var NOTE_COLOR = "#FFF600";
   var HIT_LINE_COLOR = "#9067C6";
   var ALLOWED_DIFF = {
@@ -169,13 +166,31 @@
     lanes[lane].splice(lanes[lane].indexOf(note), 1);
   }
 
+  // js/layout.js
+  var HIT_Y;
+  var NOTE_WIDTH;
+  var NOTE_HEIGHT;
+  var LANE_WIDTH;
+  var NOTE_OFFSET;
+  var CANVAS_PADDING;
+  function updateLayout(canvas2) {
+    canvas2.width = canvas2.clientWidth;
+    canvas2.height = canvas2.clientHeight;
+    HIT_Y = canvas2.height * HIT_Y_RATIO;
+    NOTE_HEIGHT = canvas2.height * NOTE_H_RATIO;
+    CANVAS_PADDING = canvas2.width * CANVAS_PAD_RATIO;
+    LANE_WIDTH = (canvas2.width - CANVAS_PADDING * 2) / NUM_LANES;
+    NOTE_WIDTH = LANE_WIDTH * NOTE_W_RATIO;
+    NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
+  }
+
   // js/graphics.js
   var canvas = document.getElementById("canvas");
-  canvas.width = CANVAS_WIDTH;
   var ctx = canvas.getContext("2d");
-  for (let i = 0; i < 5; i++) {
-    console.log(CANVAS_PADDING + i * LANE_WIDTH + NOTE_OFFSET);
-  }
+  updateLayout(canvas);
+  addEventListener("resize", () => {
+    updateLayout(canvas);
+  });
   function updateCanvas(audioTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawHitLine();

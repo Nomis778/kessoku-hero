@@ -1,19 +1,14 @@
 import {getCurrentLanes} from "./state";
-import {
-    CANVAS_PADDING, CANVAS_WIDTH,
-    FALL_TIME_SECONDS, HIT_LINE_COLOR,
-    HIT_Y, LANE_WIDTH, NOTE_COLOR,
-    NOTE_HEIGHT, NOTE_OFFSET,
-    NOTE_WIDTH,
-} from "./constants";
+import {CANVAS_PADDING, HIT_Y, LANE_WIDTH, NOTE_HEIGHT, NOTE_OFFSET, NOTE_WIDTH, updateLayout} from "./layout";
+import {FALL_TIME_SECONDS, HIT_LINE_COLOR, NOTE_COLOR} from "./constants";
 
 const canvas = document.getElementById("canvas");
-canvas.width = CANVAS_WIDTH;
 const ctx = canvas.getContext("2d");
 
-for(let i = 0; i < 5; i++) {
-    console.log(CANVAS_PADDING + (i * LANE_WIDTH) + NOTE_OFFSET);
-}
+updateLayout(canvas);
+addEventListener("resize", () => {
+    updateLayout(canvas);
+})
 
 export default function updateCanvas(audioTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
