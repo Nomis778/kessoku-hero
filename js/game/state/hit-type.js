@@ -1,4 +1,4 @@
-import {ALLOWED_DIFF} from "./constants";
+import {ALLOWED_DIFF} from "../constants";
 
 export const HitType = {
     PERFECT: 1,

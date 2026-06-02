@@ -4,7 +4,7 @@
   "description": "",
   "default": "js/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx esbuild js/start.js js/game.js --bundle --outdir=dist"
   },
   "private": true,
   "resolutions": {

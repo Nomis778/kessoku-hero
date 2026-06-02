@@ -1,8 +1,8 @@
-import {getAudioTime, pauseAudio, playAudio} from "./audio.js";
-import updateCanvas from "./graphics";
-import {registerHit, updateState} from "./state";
-import {getPoints} from "./score";
-import {KEYBINDS} from "./constants";
+import {getAudioTime, pauseAudio, playAudio} from "./game/audio.js";
+import updateCanvas from "./game/graphics/render";
+import {registerHit, updateNotes} from "./game/state/notes";
+import {getPoints} from "./game/state/score";
+import {KEYBINDS} from "./game/constants";
 
 $("#start-btn").click(function () {
     playAudio();
@@ -24,7 +24,7 @@ let rafId = requestAnimationFrame(gameLoop);
 
 function gameLoop() {
     const audioTime = getAudioTime();
-    updateState(audioTime);
+    updateNotes(audioTime);
     updateCanvas(audioTime);
     requestAnimationFrame(gameLoop);
 }

@@ -1,5 +1,5 @@
 import {HitType} from "./hit-type";
-import {REWARD} from "./constants";
+import {REWARD} from "../constants";
 
 let totalPoints = 0
 

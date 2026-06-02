@@ -1,6 +1,6 @@
-import {getCurrentLanes} from "./state";
+import {getCurrentLanes} from "../state/notes";
 import {CANVAS_PADDING, HIT_Y, LANE_WIDTH, NOTE_HEIGHT, NOTE_OFFSET, NOTE_WIDTH, updateLayout} from "./layout";
-import {FALL_TIME_SECONDS, HIT_LINE_COLOR, NOTE_COLOR} from "./constants";
+import {FALL_TIME_SECONDS, HIT_LINE_COLOR, NOTE_COLOR} from "../constants";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");

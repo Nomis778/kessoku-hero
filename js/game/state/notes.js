@@ -1,7 +1,7 @@
-import chart from "./chart";
+import chart from "../chart";
 import {getHitType, HitType} from "./hit-type";
 import {addPoints} from "./score";
-import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "./constants";
+import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
 
 // Each element is a list of notes in this lane
 let lanes = [];
@@ -9,7 +9,7 @@ for (let i = 0; i < NUM_LANES; i++) {
     lanes[i] = [];
 }
 
-export function updateState(audioTime) {
+export function updateNotes(audioTime) {
     spawnNotes(audioTime);
     dropOldNotes(audioTime);
 }

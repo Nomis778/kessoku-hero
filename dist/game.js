@@ -1,5 +1,5 @@
 (() => {
-  // js/audio.js
+  // js/game/audio.js
   var audio = new Audio("resources/audio/placeholder.mp4");
   function playAudio() {
     audio.play();
@@ -11,7 +11,7 @@
     return audio.currentTime;
   }
 
-  // js/chart.js
+  // js/game/chart.js
   var Lane = class {
     index = 0;
     constructor(notes) {
@@ -35,7 +35,7 @@
   };
   var chart_default = chart;
 
-  // js/constants.js
+  // js/game/constants.js
   var NUM_LANES = 5;
   var KEYBINDS = {
     "a": 0,
@@ -68,7 +68,7 @@
   };
   Object.freeze(REWARD);
 
-  // js/hit-type.js
+  // js/game/state/hit-type.js
   var HitType = {
     PERFECT: 1,
     GOOD: 2,
@@ -88,7 +88,7 @@
     }
   }
 
-  // js/score.js
+  // js/game/state/score.js
   var totalPoints = 0;
   function addPoints(hitType) {
     switch (hitType) {
@@ -110,12 +110,12 @@
     return totalPoints;
   }
 
-  // js/state.js
+  // js/game/state/notes.js
   var lanes = [];
   for (let i = 0; i < NUM_LANES; i++) {
     lanes[i] = [];
   }
-  function updateState(audioTime) {
+  function updateNotes(audioTime) {
     spawnNotes(audioTime);
     dropOldNotes(audioTime);
   }
@@ -166,7 +166,7 @@
     lanes[lane].splice(lanes[lane].indexOf(note), 1);
   }
 
-  // js/layout.js
+  // js/game/graphics/layout.js
   var HIT_Y;
   var NOTE_WIDTH;
   var NOTE_HEIGHT;
@@ -184,7 +184,7 @@
     NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
   }
 
-  // js/graphics.js
+  // js/game/graphics/render.js
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   updateLayout(canvas);
@@ -215,7 +215,7 @@
     return CANVAS_PADDING + lane * LANE_WIDTH + NOTE_OFFSET;
   }
 
-  // js/main.js
+  // js/game.js
   $("#start-btn").click(function() {
     playAudio();
   });
@@ -231,7 +231,7 @@
   var rafId = requestAnimationFrame(gameLoop);
   function gameLoop() {
     const audioTime = getAudioTime();
-    updateState(audioTime);
+    updateNotes(audioTime);
     updateCanvas(audioTime);
     requestAnimationFrame(gameLoop);
   }
