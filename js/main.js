@@ -20,6 +20,9 @@ addEventListener("keydown", onKeyPress);
 function onKeyPress(event) {
     const audioTime = getAudioTime();
     const lane = keybinds[event.key];
+    if(lane === undefined)
+        return;
+
     registerHit(audioTime, lane);
     console.log(getPoints());
 }
