@@ -141,7 +141,7 @@
     return closest;
   }
   function removeNote(note, lane) {
-    lanes[lane].splice(lanes.indexOf(note), 1);
+    lanes[lane].splice(lanes[lane].indexOf(note), 1);
   }
 
   // js/graphics.js
@@ -187,6 +187,8 @@
   function onKeyPress(event) {
     const audioTime = getAudioTime();
     const lane = keybinds[event.key];
+    if (lane === void 0)
+      return;
     registerHit(audioTime, lane);
     console.log(getPoints());
   }

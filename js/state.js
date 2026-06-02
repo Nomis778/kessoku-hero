@@ -67,5 +67,5 @@ function getClosestNote(audioTime, lane) {
 }
 
 function removeNote(note, lane) {
-    lanes[lane].splice(lanes.indexOf(note), 1);
+    lanes[lane].splice(lanes[lane].indexOf(note), 1);
 }
