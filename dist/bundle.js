@@ -89,40 +89,50 @@
   var SPAWN_BEFORE_SECONDS = 2;
   var FALL_TIME_SECONDS = 1.5;
   var DROP_AFTER_SECONDS = 1;
-  var activeNotes = [];
+  var lanes = [];
+  for (let i = 0; i < chart_default.lanes.length; i++) {
+    lanes[i] = [];
+  }
+  console.log(lanes);
   function updateState(audioTime) {
     spawnNotes(audioTime);
     dropOldNotes(audioTime);
   }
-  function getActiveNotes() {
-    return activeNotes;
+  function getCurrentLanes() {
+    return lanes;
   }
-  function registerHit(hitTime) {
-    const note = getClosestNote(hitTime);
+  function registerHit(hitTime, lane) {
+    const note = getClosestNote(hitTime, lane);
     if (!note)
       return;
     const diff = Math.abs(note.hitTime - hitTime);
     const hitType = getHitType(diff);
     if (hitType !== HitType.MISS)
-      removeNote(note);
+      removeNote(note, lane);
     addPoints(hitType);
   }
   function spawnNotes(audioTime) {
-    chart_default.lanes.forEach((lane) => {
-      while (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-        console.log("spawning notes");
-        activeNotes.push(lane.next());
+    for (let i = 0; i < chart_default.lanes.length; i++) {
+      const lane = chart_default.lanes[i];
+      if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
+        console.log("spawn");
+        lanes[i].push(lane.next());
         lane.incrementIndex();
+      }
+    }
+  }
+  function dropOldNotes(audioTime) {
+    lanes.forEach((lane) => {
+      while (lane.length && audioTime > lane[0].hitTime + DROP_AFTER_SECONDS) {
+        console.log("drop");
+        lane.shift();
       }
     });
   }
-  function dropOldNotes(audioTime) {
-    activeNotes = activeNotes.filter((note) => audioTime < note.hitTime + DROP_AFTER_SECONDS);
-  }
-  function getClosestNote(audioTime) {
+  function getClosestNote(audioTime, lane) {
     let closest = null;
     let closestDiff = Number.MAX_VALUE;
-    activeNotes.forEach((note) => {
+    lanes[lane].forEach((note) => {
       const diff = Math.abs(note.hitTime - audioTime);
       if (diff < closestDiff) {
         closest = note;
@@ -131,14 +141,15 @@
     });
     return closest;
   }
-  function removeNote(note) {
-    activeNotes.splice(activeNotes.indexOf(note), 1);
+  function removeNote(note, lane) {
+    lanes[lane].splice(lanes.indexOf(note), 1);
   }
 
   // js/graphics.js
   var HIT_Y = 100;
   var NOTE_WIDTH = 15;
   var NOTE_HEIGHT = 5;
+  var SPACE_BETWEEN_NOTES = 10;
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   function updateCanvas(audioTime) {
@@ -148,15 +159,18 @@
   }
   function drawNotes(audioTime) {
     ctx.fillStyle = "black";
-    getActiveNotes().forEach((note) => {
-      const currFallTime = note.hitTime - audioTime - FALL_TIME_SECONDS;
-      const currFallPercent = currFallTime / FALL_TIME_SECONDS;
-      ctx.fillRect(10, -(currFallPercent * HIT_Y), NOTE_WIDTH, NOTE_HEIGHT);
-    });
+    const lanes2 = getCurrentLanes();
+    for (let i = 0; i < lanes2.length; i++) {
+      lanes2[i].forEach((note) => {
+        const currFallTime = note.hitTime - audioTime - FALL_TIME_SECONDS;
+        const currFallPercent = currFallTime / FALL_TIME_SECONDS;
+        ctx.fillRect(i * NOTE_WIDTH + i * SPACE_BETWEEN_NOTES, -(currFallPercent * HIT_Y), NOTE_WIDTH, NOTE_HEIGHT);
+      });
+    }
   }
   function drawHitLine() {
     ctx.fillStyle = "red";
-    ctx.fillRect(10, HIT_Y, NOTE_WIDTH, NOTE_HEIGHT);
+    ctx.fillRect(0, HIT_Y, canvas.width, NOTE_HEIGHT);
   }
 
   // js/main.js
