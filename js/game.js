@@ -4,9 +4,7 @@ import {registerHit, updateNotes} from "./game/state/notes";
 import {getPoints} from "./game/state/score";
 import {KEYBINDS} from "./game/constants";
 
-$("#start-btn").click(function () {
-    playAudio();
-});
+playAudio();
 
 addEventListener("keydown", onKeyPress);
 

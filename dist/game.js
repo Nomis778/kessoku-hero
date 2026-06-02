@@ -1,6 +1,6 @@
 (() => {
   // js/game/audio.js
-  var audio = new Audio("resources/audio/placeholder.mp4");
+  var audio = new Audio("../resources/audio/placeholder.mp4");
   function playAudio() {
     audio.play();
   }
@@ -216,9 +216,7 @@
   }
 
   // js/game.js
-  $("#start-btn").click(function() {
-    playAudio();
-  });
+  playAudio();
   addEventListener("keydown", onKeyPress);
   function onKeyPress(event) {
     const audioTime = getAudioTime();
