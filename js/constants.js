@@ -17,9 +17,13 @@ export const DROP_AFTER_SECONDS = 1;
 
 // Graphics
 export const HIT_Y = 100;
-export const NOTE_WIDTH = 15;
-export const NOTE_HEIGHT = 5;
-export const SPACE_BETWEEN_NOTES = 10;
+export const NOTE_WIDTH = 50;
+export const NOTE_HEIGHT = 10;
+export const SPACE_BETWEEN_NOTES = 15;
+export const CANVAS_PADDING = 15;
+export const CANVAS_WIDTH = (CANVAS_PADDING * 2) +
+    (NUM_LANES * NOTE_WIDTH) +
+    ((NUM_LANES - 1) * SPACE_BETWEEN_NOTES);
 
 // Allowed time difference between button press
 // and note timing
