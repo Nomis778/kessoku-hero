@@ -1,6 +1,4 @@
-import chart from "./chart";
-import {getAudioTime} from "./audio";
-import {FALL_TIME_SECONDS} from "./state";
+import {FALL_TIME_SECONDS, getActiveNotes} from "./state";
 
 const HIT_Y = 100;
 const NOTE_WIDTH = 15;
@@ -17,7 +15,7 @@ export default function updateCanvas(audioTime) {
 
 function drawNotes(audioTime) {
     ctx.fillStyle = "black"
-    chart.notes.forEach(note => {
+    getActiveNotes().forEach(note => {
         const currFallTime = (note.hitTime - audioTime) - FALL_TIME_SECONDS;
         const currFallPercent = currFallTime / FALL_TIME_SECONDS;
         ctx.fillRect(10, -(currFallPercent * HIT_Y), NOTE_WIDTH, NOTE_HEIGHT);

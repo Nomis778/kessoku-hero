@@ -32,22 +32,26 @@
   var chart_default = chart;
 
   // js/state.js
+  var SPAWN_BEFORE_SECONDS = 2;
   var FALL_TIME_SECONDS = 1.5;
-  var SURVIVE_TIME_SECONDS = 2;
+  var DROP_AFTER_SECONDS = 1;
   var activeNotes = [];
   function updateState(audioTime) {
     spawnNotes(audioTime);
-    dropOldNotes(audioTime);
+    dropNotes(audioTime);
+  }
+  function getActiveNotes() {
+    return activeNotes;
   }
   function spawnNotes(audioTime) {
-    while (chart_default.next() && chart_default.next().hitTime <= audioTime + FALL_TIME_SECONDS) {
+    while (chart_default.next() && chart_default.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
       chart_default.next().isHit = false;
       activeNotes.push(chart_default.next());
       chart_default.incrementIndex();
     }
   }
-  function dropOldNotes(audioTime) {
-    activeNotes = activeNotes.filter((note) => note.isHit === true || note.hitTime < audioTime + SURVIVE_TIME_SECONDS);
+  function dropNotes(audioTime) {
+    activeNotes = activeNotes.filter((note) => note.isHit === true || audioTime < note.hitTime + DROP_AFTER_SECONDS);
   }
 
   // js/graphics.js
@@ -63,7 +67,7 @@
   }
   function drawNotes(audioTime) {
     ctx.fillStyle = "black";
-    chart_default.notes.forEach((note) => {
+    getActiveNotes().forEach((note) => {
       const currFallTime = note.hitTime - audioTime - FALL_TIME_SECONDS;
       const currFallPercent = currFallTime / FALL_TIME_SECONDS;
       ctx.fillRect(10, -(currFallPercent * HIT_Y), NOTE_WIDTH, NOTE_HEIGHT);
@@ -87,7 +91,7 @@
   function gameLoop() {
     const audioTime = getAudioTime();
     updateState(audioTime);
-    updateCanvas();
+    updateCanvas(audioTime);
     requestAnimationFrame(gameLoop);
   }
   document.addEventListener("visibilitychange", () => {

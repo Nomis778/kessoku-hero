@@ -18,7 +18,7 @@ let rafId = requestAnimationFrame(gameLoop);
 function gameLoop() {
     const audioTime = getAudioTime();
     updateState(audioTime);
-    updateCanvas();
+    updateCanvas(audioTime);
     requestAnimationFrame(gameLoop);
 }
 
