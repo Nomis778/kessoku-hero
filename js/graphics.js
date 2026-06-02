@@ -1,9 +1,5 @@
-import {FALL_TIME_SECONDS, getCurrentLanes} from "./state";
-
-const HIT_Y = 100;
-const NOTE_WIDTH = 15;
-const NOTE_HEIGHT = 5;
-const SPACE_BETWEEN_NOTES = 10
+import {getCurrentLanes} from "./state";
+import {FALL_TIME_SECONDS, HIT_Y, NOTE_HEIGHT, NOTE_WIDTH, SPACE_BETWEEN_NOTES} from "./constants";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");

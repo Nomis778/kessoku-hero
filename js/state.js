@@ -1,14 +1,11 @@
 import chart from "./chart";
 import {getHitType, HitType} from "./hit-type";
 import {addPoints} from "./score";
-
-const SPAWN_BEFORE_SECONDS = 2;
-export const FALL_TIME_SECONDS = 1.5;
-const DROP_AFTER_SECONDS = 1;
+import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "./constants";
 
 // Each element is a list of notes in this lane
 let lanes = [];
-for (let i = 0; i < chart.lanes.length; i++) {
+for (let i = 0; i < NUM_LANES; i++) {
     lanes[i] = [];
 }
 

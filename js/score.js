@@ -1,28 +1,21 @@
 import {HitType} from "./hit-type";
-
-const Reward = {
-    "PERFECT": 400,
-    "GOOD": 200,
-    "MEDIOCRE": 100,
-    "MISS": -100
-}
-Object.freeze(Reward);
+import {REWARD} from "./constants";
 
 let totalPoints = 0
 
 export function addPoints(hitType) {
     switch (hitType) {
         case HitType.PERFECT:
-            totalPoints += Reward.PERFECT;
+            totalPoints += REWARD.PERFECT;
             break;
         case HitType.GOOD:
-            totalPoints += Reward.GOOD;
+            totalPoints += REWARD.GOOD;
             break;
         case HitType.MEDIOCRE:
-            totalPoints += Reward.MEDIOCRE;
+            totalPoints += REWARD.MEDIOCRE;
             break;
         case HitType.MISS:
-            totalPoints += Reward.MISS;
+            totalPoints += REWARD.MISS;
             break;
     }
 }

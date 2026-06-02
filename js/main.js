@@ -2,24 +2,17 @@ import {getAudioTime, pauseAudio, playAudio} from "./audio.js";
 import updateCanvas from "./graphics";
 import {registerHit, updateState} from "./state";
 import {getPoints} from "./score";
+import {KEYBINDS} from "./constants";
 
 $("#start-btn").click(function () {
     playAudio();
 });
 
-const keybinds = {
-    "a": 0,
-    "w": 1,
-    "d": 2,
-    "ArrowLeft": 3,
-    "ArrowRight": 4
-}
-
 addEventListener("keydown", onKeyPress);
 
 function onKeyPress(event) {
     const audioTime = getAudioTime();
-    const lane = keybinds[event.key];
+    const lane = KEYBINDS[event.key];
     if(lane === undefined)
         return;
 
