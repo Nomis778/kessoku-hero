@@ -47,12 +47,15 @@
   var SPAWN_BEFORE_SECONDS = 2;
   var FALL_TIME_SECONDS = 1.5;
   var DROP_AFTER_SECONDS = 1;
-  var HIT_Y = 100;
+  var HIT_Y = 650;
   var NOTE_WIDTH = 50;
-  var NOTE_HEIGHT = 10;
-  var SPACE_BETWEEN_NOTES = 15;
-  var CANVAS_PADDING = 15;
-  var CANVAS_WIDTH = CANVAS_PADDING * 2 + NUM_LANES * NOTE_WIDTH + (NUM_LANES - 1) * SPACE_BETWEEN_NOTES;
+  var NOTE_HEIGHT = 25;
+  var LANE_WIDTH = 100;
+  var NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
+  var CANVAS_PADDING = 50;
+  var CANVAS_WIDTH = CANVAS_PADDING * 2 + LANE_WIDTH * NUM_LANES;
+  var NOTE_COLOR = "#FFF600";
+  var HIT_LINE_COLOR = "#9067C6";
   var ALLOWED_DIFF = {
     "PERFECT": 0.1,
     "GOOD": 0.3,
@@ -168,15 +171,18 @@
 
   // js/graphics.js
   var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
   canvas.width = CANVAS_WIDTH;
+  var ctx = canvas.getContext("2d");
+  for (let i = 0; i < 5; i++) {
+    console.log(CANVAS_PADDING + i * LANE_WIDTH + NOTE_OFFSET);
+  }
   function updateCanvas(audioTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawHitLine();
     drawNotes(audioTime);
   }
   function drawNotes(audioTime) {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = NOTE_COLOR;
     const lanes2 = getCurrentLanes();
     for (let i = 0; i < lanes2.length; i++) {
       lanes2[i].forEach((note) => {
@@ -187,11 +193,11 @@
     }
   }
   function drawHitLine() {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = HIT_LINE_COLOR;
     ctx.fillRect(0, HIT_Y, canvas.width, NOTE_HEIGHT);
   }
   function getLaneX(lane) {
-    return CANVAS_PADDING + lane * (NOTE_WIDTH + SPACE_BETWEEN_NOTES);
+    return CANVAS_PADDING + lane * LANE_WIDTH + NOTE_OFFSET;
   }
 
   // js/main.js

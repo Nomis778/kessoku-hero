@@ -16,14 +16,17 @@ export const FALL_TIME_SECONDS = 1.5;
 export const DROP_AFTER_SECONDS = 1;
 
 // Graphics
-export const HIT_Y = 100;
+export const HIT_Y = 650;
 export const NOTE_WIDTH = 50;
-export const NOTE_HEIGHT = 10;
-export const SPACE_BETWEEN_NOTES = 15;
-export const CANVAS_PADDING = 15;
-export const CANVAS_WIDTH = (CANVAS_PADDING * 2) +
-    (NUM_LANES * NOTE_WIDTH) +
-    ((NUM_LANES - 1) * SPACE_BETWEEN_NOTES);
+export const NOTE_HEIGHT = 25;
+export const LANE_WIDTH = 100;
+export const NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
+export const CANVAS_PADDING = 50;
+export const CANVAS_WIDTH = (CANVAS_PADDING * 2) + (LANE_WIDTH * NUM_LANES);
+
+// Colors
+export const NOTE_COLOR = "#FFF600";
+export const HIT_LINE_COLOR = "#9067C6"
 
 // Allowed time difference between button press
 // and note timing
