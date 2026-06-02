@@ -93,7 +93,6 @@
   for (let i = 0; i < chart_default.lanes.length; i++) {
     lanes[i] = [];
   }
-  console.log(lanes);
   function updateState(audioTime) {
     spawnNotes(audioTime);
     dropOldNotes(audioTime);
@@ -115,19 +114,19 @@
     for (let i = 0; i < chart_default.lanes.length; i++) {
       const lane = chart_default.lanes[i];
       if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-        console.log("spawn");
         lanes[i].push(lane.next());
         lane.incrementIndex();
       }
     }
   }
   function dropOldNotes(audioTime) {
-    lanes.forEach((lane) => {
-      while (lane.length && audioTime > lane[0].hitTime + DROP_AFTER_SECONDS) {
-        console.log("drop");
-        lane.shift();
+    lanes.forEach(
+      (lane) => {
+        while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
+          lane.shift();
+        }
       }
-    });
+    );
   }
   function getClosestNote(audioTime, lane) {
     let closest = null;
@@ -177,10 +176,18 @@
   $("#start-btn").click(function() {
     playAudio();
   });
+  var keybinds = {
+    "a": 0,
+    "w": 1,
+    "d": 2,
+    "ArrowLeft": 3,
+    "ArrowRight": 4
+  };
   addEventListener("keydown", onKeyPress);
   function onKeyPress(event) {
     const audioTime = getAudioTime();
-    registerHit(audioTime);
+    const lane = keybinds[event.key];
+    registerHit(audioTime, lane);
     console.log(getPoints());
   }
   var rafId = requestAnimationFrame(gameLoop);

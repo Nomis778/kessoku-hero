@@ -7,11 +7,20 @@ $("#start-btn").click(function () {
     playAudio();
 });
 
+const keybinds = {
+    "a": 0,
+    "w": 1,
+    "d": 2,
+    "ArrowLeft": 3,
+    "ArrowRight": 4
+}
+
 addEventListener("keydown", onKeyPress);
 
 function onKeyPress(event) {
     const audioTime = getAudioTime();
-    registerHit(audioTime);
+    const lane = keybinds[event.key];
+    registerHit(audioTime, lane);
     console.log(getPoints());
 }
 
