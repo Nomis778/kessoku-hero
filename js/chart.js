@@ -10,11 +10,11 @@ const chart = {
     "index": 0,
 
     "next": function () {
-        return notes[index]
+        return this.notes[this.index]
     },
 
     "incrementIndex": function () {
-        index++
+        this.index++
     }
 }
 

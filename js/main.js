@@ -1,15 +1,33 @@
-import {getAudioTime, playAudio} from "./audio.js";
+import {getAudioTime, pauseAudio, playAudio} from "./audio.js";
 import updateCanvas from "./graphics";
+import {updateState} from "./state";
 
 $("#start-btn").click(function () {
     playAudio();
-})
+});
 
-addEventListener("keydown", logKeyPressed)
+addEventListener("keydown", logKeyPressed);
 
 function logKeyPressed(event) {
     const time = getAudioTime();
-    console.log(event.key, "Pressed at", time)
+    console.log(event.key, "Pressed at", time);
 }
 
-requestAnimationFrame(updateCanvas);
+let rafId = requestAnimationFrame(gameLoop);
+
+function gameLoop() {
+    const audioTime = getAudioTime();
+    updateState(audioTime);
+    updateCanvas();
+    requestAnimationFrame(gameLoop);
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        playAudio();
+        cancelAnimationFrame(rafId);
+    } else {
+        pauseAudio();
+        rafId = requestAnimationFrame(gameLoop);
+    }
+});

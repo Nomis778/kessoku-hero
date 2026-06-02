@@ -4,6 +4,9 @@
   function playAudio() {
     audio.play();
   }
+  function pauseAudio() {
+    audio.pause();
+  }
   function getAudioTime() {
     return audio.currentTime;
   }
@@ -20,29 +23,45 @@
     ],
     "index": 0,
     "next": function() {
-      return notes[index];
+      return this.notes[this.index];
     },
     "incrementIndex": function() {
-      index++;
+      this.index++;
     }
   };
   var chart_default = chart;
 
-  // js/graphics.js
+  // js/state.js
   var FALL_TIME_SECONDS = 1.5;
+  var SURVIVE_TIME_SECONDS = 2;
+  var activeNotes = [];
+  function updateState(audioTime) {
+    spawnNotes(audioTime);
+    dropOldNotes(audioTime);
+  }
+  function spawnNotes(audioTime) {
+    while (chart_default.next() && chart_default.next().hitTime <= audioTime + FALL_TIME_SECONDS) {
+      chart_default.next().isHit = false;
+      activeNotes.push(chart_default.next());
+      chart_default.incrementIndex();
+    }
+  }
+  function dropOldNotes(audioTime) {
+    activeNotes = activeNotes.filter((note) => note.isHit === true || note.hitTime < audioTime + SURVIVE_TIME_SECONDS);
+  }
+
+  // js/graphics.js
   var HIT_Y = 100;
   var NOTE_WIDTH = 15;
   var NOTE_HEIGHT = 5;
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-  function updateCanvas() {
+  function updateCanvas(audioTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawHitLine();
-    drawNotes();
-    requestAnimationFrame(updateCanvas);
+    drawNotes(audioTime);
   }
-  function drawNotes() {
-    const audioTime = getAudioTime();
+  function drawNotes(audioTime) {
     ctx.fillStyle = "black";
     chart_default.notes.forEach((note) => {
       const currFallTime = note.hitTime - audioTime - FALL_TIME_SECONDS;
@@ -64,5 +83,20 @@
     const time = getAudioTime();
     console.log(event.key, "Pressed at", time);
   }
-  requestAnimationFrame(updateCanvas);
+  var rafId = requestAnimationFrame(gameLoop);
+  function gameLoop() {
+    const audioTime = getAudioTime();
+    updateState(audioTime);
+    updateCanvas();
+    requestAnimationFrame(gameLoop);
+  }
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      playAudio();
+      cancelAnimationFrame(rafId);
+    } else {
+      pauseAudio();
+      rafId = requestAnimationFrame(gameLoop);
+    }
+  });
 })();
