@@ -45,6 +45,7 @@ function spawnNotes(audioTime) {
 function dropOldNotes(audioTime) {
     lanes.forEach(lane => {
         while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
+            addPoints(HitType.MISS);
             lane.shift();
         }}
     );
