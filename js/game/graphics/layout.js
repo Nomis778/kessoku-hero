@@ -2,7 +2,21 @@ import {CANVAS_PAD_RATIO, HIT_Y_RATIO, NOTE_H_RATIO, NOTE_W_RATIO, NUM_LANES} fr
 
 export let HIT_Y, NOTE_WIDTH, NOTE_HEIGHT, LANE_WIDTH, NOTE_OFFSET, CANVAS_PADDING;
 
-export function updateLayout(canvas) {
+const canvas = document.getElementById("canvas");
+
+export function initResizeListeners() {
+    const observer = new ResizeObserver(() => updateLayout());
+    observer.observe(canvas);
+
+    document.addEventListener('fullscreenchange', updateLayout);
+}
+
+export function updateLayout() {
+    // Stops overflow before recalculation,
+    // so clientWidth can't exceed window size
+    canvas.width  = 0;
+    canvas.height = 0;
+
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 

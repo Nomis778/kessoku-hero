@@ -3,11 +3,12 @@ import updateCanvas from "./game/graphics/render";
 import {registerHit, updateNotes} from "./game/state/notes";
 import {getPoints} from "./game/state/score";
 import {KEYBINDS} from "./game/constants";
+import {initResizeListeners, updateLayout} from "./game/graphics/layout";
 
-playAudio();
+updateLayout();
+initResizeListeners();
 
 addEventListener("keydown", onKeyPress);
-
 function onKeyPress(event) {
     const audioTime = getAudioTime();
     const lane = KEYBINDS[event.key];
@@ -27,6 +28,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+// Pauses game if window is hidden
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
         pauseAudio();
@@ -36,3 +38,5 @@ document.addEventListener('visibilitychange', () => {
         rafId = requestAnimationFrame(gameLoop);
     }
 });
+
+playAudio();

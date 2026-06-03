@@ -173,26 +173,30 @@
   var LANE_WIDTH;
   var NOTE_OFFSET;
   var CANVAS_PADDING;
-  function updateLayout(canvas2) {
-    canvas2.width = canvas2.clientWidth;
-    canvas2.height = canvas2.clientHeight;
-    HIT_Y = canvas2.height * HIT_Y_RATIO;
-    NOTE_HEIGHT = canvas2.height * NOTE_H_RATIO;
-    CANVAS_PADDING = canvas2.width * CANVAS_PAD_RATIO;
-    LANE_WIDTH = (canvas2.width - CANVAS_PADDING * 2) / NUM_LANES;
+  var canvas = document.getElementById("canvas");
+  function initResizeListeners() {
+    const observer = new ResizeObserver(() => updateLayout());
+    observer.observe(canvas);
+    document.addEventListener("fullscreenchange", updateLayout);
+  }
+  function updateLayout() {
+    canvas.width = 0;
+    canvas.height = 0;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    HIT_Y = canvas.height * HIT_Y_RATIO;
+    NOTE_HEIGHT = canvas.height * NOTE_H_RATIO;
+    CANVAS_PADDING = canvas.width * CANVAS_PAD_RATIO;
+    LANE_WIDTH = (canvas.width - CANVAS_PADDING * 2) / NUM_LANES;
     NOTE_WIDTH = LANE_WIDTH * NOTE_W_RATIO;
     NOTE_OFFSET = (LANE_WIDTH - NOTE_WIDTH) / 2;
   }
 
   // js/game/graphics/render.js
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  updateLayout(canvas);
-  addEventListener("resize", () => {
-    updateLayout(canvas);
-  });
+  var canvas2 = document.getElementById("canvas");
+  var ctx = canvas2.getContext("2d");
   function updateCanvas(audioTime) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas2.width, canvas2.height);
     drawHitLine();
     drawNotes(audioTime);
   }
@@ -209,14 +213,15 @@
   }
   function drawHitLine() {
     ctx.fillStyle = HIT_LINE_COLOR;
-    ctx.fillRect(0, HIT_Y, canvas.width, NOTE_HEIGHT);
+    ctx.fillRect(0, HIT_Y, canvas2.width, NOTE_HEIGHT);
   }
   function getLaneX(lane) {
     return CANVAS_PADDING + lane * LANE_WIDTH + NOTE_OFFSET;
   }
 
   // js/game.js
-  playAudio();
+  updateLayout();
+  initResizeListeners();
   addEventListener("keydown", onKeyPress);
   function onKeyPress(event) {
     const audioTime = getAudioTime();
@@ -242,4 +247,5 @@
       rafId = requestAnimationFrame(gameLoop);
     }
   });
+  playAudio();
 })();
