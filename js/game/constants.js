@@ -17,7 +17,7 @@ export const DROP_AFTER_SECONDS = 1;
 
 // Graphics, calculated from what works at 600 width and 900 height
 export const HIT_Y_RATIO = 700 / 900;
-export const NOTE_W_RATIO = 60 / 100; // 100 lane width
+export const NOTE_W_RATIO = 65 / 100; // 100 lane width
 export const NOTE_H_RATIO = 35 / 900;
 export const CANVAS_PAD_RATIO = 50 / 600;
 

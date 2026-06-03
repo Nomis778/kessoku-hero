@@ -48,7 +48,7 @@
   var FALL_TIME_SECONDS = 1.5;
   var DROP_AFTER_SECONDS = 1;
   var HIT_Y_RATIO = 700 / 900;
-  var NOTE_W_RATIO = 60 / 100;
+  var NOTE_W_RATIO = 65 / 100;
   var NOTE_H_RATIO = 35 / 900;
   var CANVAS_PAD_RATIO = 50 / 600;
   var NOTE_COLOR = "#FFF600";
