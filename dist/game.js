@@ -251,7 +251,7 @@
   var NOTE_COLOR = "#FFF600";
   var HIT_LINE_COLOR = "#9067C6";
   var ALLOWED_DIFF = {
-    "PERFECT": 0.03,
+    "PERFECT": 0.035,
     "GOOD": 0.1,
     "MEDIOCRE": 0.3
   };

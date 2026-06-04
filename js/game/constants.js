@@ -28,7 +28,7 @@ export const HIT_LINE_COLOR = "#9067C6"
 // Allowed time difference between button press
 // and note timing
 export const ALLOWED_DIFF = {
-    "PERFECT": 0.03,
+    "PERFECT": 0.035,
     "GOOD": 0.1,
     "MEDIOCRE": 0.3,
 }
