@@ -337,9 +337,9 @@
   }
   function registerHit(hitTime, lane) {
     const note = getClosestNote(hitTime, lane);
-    if (!note)
-      return;
-    const diff = Math.abs(note.hitTime - hitTime);
+    let diff = Number.MAX_VALUE;
+    if (note)
+      diff = Math.abs(note.hitTime - hitTime);
     const hitType = getHitType(diff);
     if (hitType !== HitType.MISS)
       removeNote(note, lane);
