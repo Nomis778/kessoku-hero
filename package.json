@@ -4,7 +4,7 @@
   "description": "",
   "default": "js/main.js",
   "scripts": {
-    "build": "npx esbuild js/start.js js/game.js --bundle --outdir=dist"
+    "build": "npx esbuild js/main.js --bundle --outdir=dist"
   },
   "private": true,
   "resolutions": {

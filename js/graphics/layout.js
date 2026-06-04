@@ -5,13 +5,13 @@ export let HIT_Y, NOTE_WIDTH, NOTE_HEIGHT, LANE_WIDTH, NOTE_OFFSET, CANVAS_PADDI
 const canvas = document.getElementById("canvas");
 
 export function initResizeListeners() {
-    const observer = new ResizeObserver(() => updateLayout());
+    const observer = new ResizeObserver(() => updateLayoutForCurrentSize());
     observer.observe(canvas);
 
-    document.addEventListener('fullscreenchange', updateLayout);
+    document.addEventListener('fullscreenchange', updateLayoutForCurrentSize);
 }
 
-export function updateLayout() {
+export function updateLayoutForCurrentSize() {
     // Stops overflow before recalculation,
     // so clientWidth can't exceed window size
     canvas.width  = 0;

@@ -1,7 +1,9 @@
 body {
     display: grid;
+    grid-template-rows: 1fr 2fr;
     grid-template-columns: 5fr 6fr 5fr;
     grid-template-areas:
+            "control game score"
             "info game score";
 
     overflow: hidden;
@@ -18,6 +20,10 @@ body {
 .board {
     margin: 0 50px auto;
     background-color: lightgray;
+}
+
+#control {
+    grid-area: control;
 }
 
 #info {
