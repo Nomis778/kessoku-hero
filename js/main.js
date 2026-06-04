@@ -3,7 +3,7 @@ import updateCanvas from "./graphics/render";
 import {registerHit, resetNotes, updateNotes} from "./state/notes";
 import {KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
-import {initStatisticsListeners} from "./state/stats-ui";
+import {initStatisticsListeners} from "./graphics/stats-ui";
 import {checkAndSetHighScore, resetStatistics} from "./state/stats";
 
 init()
