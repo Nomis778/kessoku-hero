@@ -8,7 +8,9 @@ const statistics = {
     "numGood": 0,
     "numMediocre": 0,
     "numMiss": 0
-}
+};
+
+let onUpdateCallback = null;
 
 export function addToStatistics(hitType) {
     statistics.totalHits++;
@@ -30,8 +32,14 @@ export function addToStatistics(hitType) {
             statistics.numMiss++;
             break;
     }
+
+    onUpdateCallback?.();
 }
 
-export function getPoints() {
-    return totalPoints;
+export function getStatistics() {
+    return Object.freeze({...statistics});
+}
+
+export function onStatisticsUpdate(callback) {
+    onUpdateCallback = callback;
 }

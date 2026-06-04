@@ -7,7 +7,7 @@
     <title>Kessoku Hero</title>
 </head>
 <body>
-    <div id="info">
+    <div id="info" class="board">
         <h2>Keybinds:</h2>
         <kbd>W</kbd>
         <kbd>S</kbd>
@@ -16,7 +16,30 @@
         <kbd>ArrowDown</kbd>
         <button id="start">START</button>
     </div>
-    <div id="score"></div>
+    <div id="score" class="board">
+        <ul>
+            <li>
+                <label for="points">Points:</label>
+                <div id="points"></div>
+            </li>
+            <li>
+                <label for="perfect">Perfect hits:</label>
+                <div id="perfect"></div>
+            </li>
+            <li>
+                <label for="good">Good hits:</label>
+                <div id="good"></div>
+            </li>
+            <li>
+                <label for="mediocre">Mediocre hits:</label>
+                <div id="mediocre"></div>
+            </li>
+            <li>
+                <label for="miss">Misses:</label>
+                <div id="miss"></div>
+            </li>
+        </ul>
+    </div>
     <canvas id="canvas"></canvas>
 </body>
 </html>

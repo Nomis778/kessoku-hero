@@ -15,10 +15,13 @@ body {
     background-size: 100% 100%;
 }
 
-#info {
-    grid-area: info;
+.board {
     margin: 0 50px auto;
     background-color: lightgray;
+}
+
+#info {
+    grid-area: info;
 }
 
 #score {

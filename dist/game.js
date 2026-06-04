@@ -1,5 +1,5 @@
 (() => {
-  // js/game/audio.js
+  // js/game/state/audio.js
   var audio = new Audio("../resources/audio/seishun.mp3");
   function playAudio() {
     audio.play();
@@ -11,7 +11,7 @@
     return audio.currentTime;
   }
 
-  // js/game/chart.js
+  // js/game/chart/chart.js
   var Lane = class {
     index = 0;
     constructor(notes) {
@@ -225,7 +225,6 @@
       this.lanes.forEach((lane) => {
         lane.notes.forEach((note) => {
           note.hitTime = note.hitBeat / (this.bpm / 60);
-          console.log(note.hitBeat = note.hitTime);
         });
       });
     }
@@ -294,6 +293,7 @@
     "numMediocre": 0,
     "numMiss": 0
   };
+  var onUpdateCallback = null;
   function addToStatistics(hitType) {
     statistics.totalHits++;
     switch (hitType) {
@@ -314,6 +314,13 @@
         statistics.numMiss++;
         break;
     }
+    onUpdateCallback?.();
+  }
+  function getStatistics() {
+    return Object.freeze({ ...statistics });
+  }
+  function onStatisticsUpdate(callback) {
+    onUpdateCallback = callback;
   }
 
   // js/game/state/notes.js
@@ -456,4 +463,22 @@
       rafId = requestAnimationFrame(gameLoop);
     }
   });
+  var points = document.querySelector("#points");
+  var perfect = document.querySelector("#perfect");
+  var good = document.querySelector("#good");
+  var mediocre = document.querySelector("#mediocre");
+  var miss = document.querySelector("#miss");
+  onStatisticsUpdate(function() {
+    const stats = getStatistics();
+    points.innerHTML = stats.points;
+    console.log(stats.points);
+    const total = stats.totalHits;
+    perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)})`;
+    good.innerHTML = `${stats.numGood} (${toPercent(stats.numGood / total)}%)`;
+    mediocre.innerHTML = `${stats.numMediocre} (${toPercent(stats.numMediocre / total)}%)`;
+    miss.innerHTML = `${stats.numMiss} (${toPercent(stats.numMiss / total)}%)`;
+  });
+  function toPercent(number) {
+    return (number * 100).toFixed();
+  }
 })();
