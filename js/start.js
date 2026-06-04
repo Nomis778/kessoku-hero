@@ -1,3 +1,3 @@
-document.querySelector("#start-btn").click(function () {
+document.querySelector("#start-btn").addEventListener("click", (function () {
     location.href = './game.html';
-});
+}));
