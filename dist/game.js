@@ -251,9 +251,9 @@
   var NOTE_COLOR = "#FFF600";
   var HIT_LINE_COLOR = "#9067C6";
   var ALLOWED_DIFF = {
-    "PERFECT": 0.1,
-    "GOOD": 0.3,
-    "MEDIOCRE": 0.5
+    "PERFECT": 0.03,
+    "GOOD": 0.1,
+    "MEDIOCRE": 0.3
   };
   Object.freeze(ALLOWED_DIFF);
   var REWARD = {
@@ -471,9 +471,8 @@
   onStatisticsUpdate(function() {
     const stats = getStatistics();
     points.innerHTML = stats.points;
-    console.log(stats.points);
     const total = stats.totalHits;
-    perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)})`;
+    perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)}%)`;
     good.innerHTML = `${stats.numGood} (${toPercent(stats.numGood / total)}%)`;
     mediocre.innerHTML = `${stats.numMediocre} (${toPercent(stats.numMediocre / total)}%)`;
     miss.innerHTML = `${stats.numMiss} (${toPercent(stats.numMiss / total)}%)`;
