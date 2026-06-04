@@ -5,6 +5,10 @@ import {getPoints} from "./game/state/score";
 import {KEYBINDS} from "./game/constants";
 import {initResizeListeners, updateLayout} from "./game/graphics/layout";
 
+$("#start").click(function () {
+    playAudio();
+})
+
 updateLayout();
 initResizeListeners();
 
@@ -38,5 +42,3 @@ document.addEventListener('visibilitychange', () => {
         rafId = requestAnimationFrame(gameLoop);
     }
 });
-
-playAudio();

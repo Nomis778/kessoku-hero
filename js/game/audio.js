@@ -1,4 +1,4 @@
-const audio = new Audio("../resources/audio/placeholder.mp4");
+const audio = new Audio("../resources/audio/seishun.mp3");
 
 export function playAudio() {
     audio.play();

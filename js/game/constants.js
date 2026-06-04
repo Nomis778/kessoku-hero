@@ -7,7 +7,7 @@ export const KEYBINDS = {
     "s": 1,
     "d": 2,
     "ArrowLeft": 3,
-    "ArrowRight": 4
+    "ArrowDown": 4
 }
 
 // Note lifetime logic
