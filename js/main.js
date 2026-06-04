@@ -1,4 +1,4 @@
-import {getAudioTime, pauseAudio, playAudio, restartAudio} from "./state/audio.js";
+import {getAudioTime, pauseAudio, playAudio, resetAudio} from "./state/audio.js";
 import updateCanvas from "./graphics/render";
 import {registerHit, resetNotes, updateNotes} from "./state/notes";
 import {KEYBINDS} from "./constants";
@@ -18,22 +18,24 @@ function init() {
 }
 
 document.querySelector("#start").addEventListener("click", start);
-document.querySelector("#restart").addEventListener("click", restart);
+document.querySelector("#reset").addEventListener("click", reset);
 
 
 let isStarted = false;
+
 function start() {
-    if(!isStarted) {
+    if (!isStarted) {
         isStarted = true;
+        playAudio();
     }
-    playAudio();
 }
 
-function restart() {
+function reset() {
     if (isStarted) {
         resetNotes();
         resetStatistics();
-        restartAudio();
+        resetAudio();
+        isStarted = false;
     }
 }
 
@@ -66,8 +68,8 @@ function initGameLoop() {
 }
 
 function gameLoop() {
-     const audioTime = getAudioTime();
-     updateNotes(audioTime);
-     updateCanvas(audioTime);
-     requestAnimationFrame(gameLoop);
+    const audioTime = getAudioTime();
+    updateNotes(audioTime);
+    updateCanvas(audioTime);
+    requestAnimationFrame(gameLoop);
 }

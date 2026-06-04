@@ -10,10 +10,9 @@ export function pauseAudio() {
     audio.pause();
 }
 
-export function restartAudio() {
+export function resetAudio() {
     audio.pause()
     audio.currentTime = 0;
-    audio.play();
 }
 
 export function getAudioTime() {

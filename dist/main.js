@@ -234,10 +234,9 @@
   function pauseAudio() {
     audio.pause();
   }
-  function restartAudio() {
+  function resetAudio() {
     audio.pause();
     audio.currentTime = 0;
-    audio.play();
   }
   function getAudioTime() {
     return audio.currentTime;
@@ -487,19 +486,20 @@
     initGameLoop();
   }
   document.querySelector("#start").addEventListener("click", start);
-  document.querySelector("#restart").addEventListener("click", restart);
+  document.querySelector("#reset").addEventListener("click", reset);
   var isStarted = false;
   function start() {
     if (!isStarted) {
       isStarted = true;
+      playAudio();
     }
-    playAudio();
   }
-  function restart() {
+  function reset() {
     if (isStarted) {
       resetNotes();
       resetStatistics();
-      restartAudio();
+      resetAudio();
+      isStarted = false;
     }
   }
   function initInputHandling() {
