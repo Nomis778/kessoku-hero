@@ -52,10 +52,8 @@ onStatisticsUpdate(function() {
     const stats = getStatistics()
     points.innerHTML = stats.points;
 
-    console.log(stats.points);
-
     const total = stats.totalHits;
-    perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)})`;
+    perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)}%)`;
     good.innerHTML = `${stats.numGood} (${toPercent(stats.numGood / total)}%)`;
     mediocre.innerHTML = `${stats.numMediocre} (${toPercent(stats.numMediocre / total)}%)`;
     miss.innerHTML = `${stats.numMiss} (${toPercent(stats.numMiss / total)}%)`;
