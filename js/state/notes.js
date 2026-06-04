@@ -32,6 +32,10 @@ export function registerHit(hitTime, lane) {
     addToStatistics(hitType)
 }
 
+export function resetNotes() {
+    chart.resetLanes();
+}
+
 function spawnNotes(audioTime) {
     for (let i = 0; i < chart.lanes.length; i++) {
         const lane = chart.lanes[i];

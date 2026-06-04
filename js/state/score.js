@@ -43,3 +43,10 @@ export function getStatistics() {
 export function onStatisticsUpdate(callback) {
     onUpdateCallback = callback;
 }
+
+export function resetStatistics() {
+    for (let key in statistics) {
+        statistics[key] = 0;
+    }
+    onUpdateCallback?.();
+}

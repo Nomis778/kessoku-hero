@@ -161,6 +161,12 @@ const chart = {
                 note.hitTime = note.hitBeat / (this.bpm / 60);
             })
         })
+   },
+
+   "resetLanes": function() {
+        this.lanes.forEach(lane => {
+            lane.index = 0;
+        })
    }
 }
 
