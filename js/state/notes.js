@@ -1,6 +1,6 @@
 import chart from "../chart/chart";
 import {getHitType, HitType} from "./hit-type";
-import {addToStatistics} from "./score";
+import {addToStatistics} from "./stats";
 import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
 
 // Each element is a list of notes in this lane

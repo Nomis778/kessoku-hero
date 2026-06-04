@@ -1,4 +1,4 @@
-import {getStatistics, onStatisticsUpdate} from "./score";
+import {getStatistics, onStatisticsUpdate} from "./stats";
 
 export function initStatisticsListeners() {
     const points = document.querySelector("#points");
