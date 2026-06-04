@@ -1,16 +1,4 @@
 (() => {
-  // js/state/audio.js
-  var audio = new Audio("../resources/audio/seishun.mp3");
-  function playAudio() {
-    audio.play();
-  }
-  function pauseAudio() {
-    audio.pause();
-  }
-  function getAudioTime() {
-    return audio.currentTime;
-  }
-
   // js/chart/chart.js
   var Lane = class {
     index = 0;
@@ -26,6 +14,7 @@
   };
   var chart = {
     "bpm": 190,
+    "source": "../resources/audio/seishun.mp3",
     "lanes": [
       new Lane([
         // Intro
@@ -227,10 +216,32 @@
           note.hitTime = note.hitBeat / (this.bpm / 60);
         });
       });
+    },
+    "resetLanes": function() {
+      this.lanes.forEach((lane) => {
+        lane.index = 0;
+      });
     }
   };
   chart.init();
   var chart_default = chart;
+
+  // js/state/audio.js
+  var audio = new Audio(chart_default.source);
+  function playAudio() {
+    audio.play();
+  }
+  function pauseAudio() {
+    audio.pause();
+  }
+  function restartAudio() {
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play();
+  }
+  function getAudioTime() {
+    return audio.currentTime;
+  }
 
   // js/constants.js
   var NUM_LANES = 5;
@@ -284,7 +295,7 @@
     }
   }
 
-  // js/state/score.js
+  // js/state/stats.js
   var statistics = {
     "points": 0,
     "totalHits": 0,
@@ -322,6 +333,12 @@
   function onStatisticsUpdate(callback) {
     onUpdateCallback = callback;
   }
+  function resetStatistics() {
+    for (let key in statistics) {
+      statistics[key] = 0;
+    }
+    onUpdateCallback?.();
+  }
 
   // js/state/notes.js
   var lanes = [];
@@ -344,6 +361,9 @@
     if (hitType !== HitType.MISS)
       removeNote(note, lane);
     addToStatistics(hitType);
+  }
+  function resetNotes() {
+    chart_default.resetLanes();
   }
   function spawnNotes(audioTime) {
     for (let i = 0; i < chart_default.lanes.length; i++) {
@@ -389,11 +409,11 @@
   var CANVAS_PADDING;
   var canvas = document.getElementById("canvas");
   function initResizeListeners() {
-    const observer = new ResizeObserver(() => updateLayoutForCurrentSize());
+    const observer = new ResizeObserver(() => updateLayoutForCurrentWindowSize());
     observer.observe(canvas);
-    document.addEventListener("fullscreenchange", updateLayoutForCurrentSize);
+    document.addEventListener("fullscreenchange", updateLayoutForCurrentWindowSize);
   }
-  function updateLayoutForCurrentSize() {
+  function updateLayoutForCurrentWindowSize() {
     canvas.width = 0;
     canvas.height = 0;
     canvas.width = canvas.clientWidth;
@@ -433,7 +453,7 @@
     return CANVAS_PADDING + lane * LANE_WIDTH + NOTE_OFFSET;
   }
 
-  // js/state/score-ui.js
+  // js/state/stats-ui.js
   function initStatisticsListeners() {
     const points = document.querySelector("#points");
     const perfect = document.querySelector("#perfect");
@@ -444,37 +464,44 @@
       const stats = getStatistics();
       points.innerHTML = stats.points;
       const total = stats.totalHits;
-      perfect.innerHTML = `${stats.numPerfect} (${toPercent(stats.numPerfect / total)}%)`;
-      good.innerHTML = `${stats.numGood} (${toPercent(stats.numGood / total)}%)`;
-      mediocre.innerHTML = `${stats.numMediocre} (${toPercent(stats.numMediocre / total)}%)`;
-      miss.innerHTML = `${stats.numMiss} (${toPercent(stats.numMiss / total)}%)`;
+      perfect.innerHTML = `${stats.numPerfect} (${percentageOf(stats.numPerfect, total)}%)`;
+      good.innerHTML = `${stats.numGood} (${percentageOf(stats.numGood, total)}%)`;
+      mediocre.innerHTML = `${stats.numMediocre} (${percentageOf(stats.numMediocre, total)}%)`;
+      miss.innerHTML = `${stats.numMiss} (${percentageOf(stats.numMiss, total)}%)`;
     });
-    function toPercent(number) {
-      return (number * 100).toFixed();
+    function percentageOf(numerator, denominator) {
+      if (denominator === 0)
+        return 0;
+      const quotient = numerator / denominator;
+      return (quotient * 100).toFixed();
     }
   }
 
   // js/main.js
   init();
   function init() {
-    updateLayoutForCurrentSize();
+    updateLayoutForCurrentWindowSize();
     initResizeListeners();
     initStatisticsListeners();
     initInputHandling();
     initGameLoop();
   }
+  document.querySelector("#start").addEventListener("click", start);
+  document.querySelector("#restart").addEventListener("click", restart);
   var isStarted = false;
-  document.querySelector("#start").addEventListener("click", function() {
+  function start() {
     if (!isStarted) {
       isStarted = true;
-      playAudio();
     }
-  });
-  document.querySelector("#restart").addEventListener("click", function() {
+    playAudio();
+  }
+  function restart() {
     if (isStarted) {
-      playAudio();
+      resetNotes();
+      resetStatistics();
+      restartAudio();
     }
-  });
+  }
   function initInputHandling() {
     addEventListener("keydown", onKeyPress);
     function onKeyPress(event) {

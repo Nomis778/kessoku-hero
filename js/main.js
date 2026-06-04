@@ -1,39 +1,41 @@
-import {getAudioTime, pauseAudio, playAudio} from "./state/audio.js";
+import {getAudioTime, pauseAudio, playAudio, restartAudio} from "./state/audio.js";
 import updateCanvas from "./graphics/render";
-import {registerHit, updateNotes} from "./state/notes";
+import {registerHit, resetNotes, updateNotes} from "./state/notes";
 import {KEYBINDS} from "./constants";
-import {initResizeListeners, updateLayoutForCurrentSize} from "./graphics/layout";
-import {initStatisticsListeners} from "./state/score-ui";
-
+import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
+import {initStatisticsListeners} from "./state/stats-ui";
+import {resetStatistics} from "./state/stats";
 
 init()
 
 function init() {
-    updateLayoutForCurrentSize();
+    updateLayoutForCurrentWindowSize();
     initResizeListeners();
 
     initStatisticsListeners();
-
     initInputHandling();
-
     initGameLoop();
 }
 
+document.querySelector("#start").addEventListener("click", start);
+document.querySelector("#restart").addEventListener("click", restart);
+
+
 let isStarted = false;
-
-document.querySelector("#start").addEventListener("click", function () {
-    if (!isStarted) {
+function start() {
+    if(!isStarted) {
         isStarted = true;
-        playAudio();
     }
-})
+    playAudio();
+}
 
-document.querySelector("#restart").addEventListener("click", function () {
+function restart() {
     if (isStarted) {
-        // reset state
-        playAudio();
+        resetNotes();
+        resetStatistics();
+        restartAudio();
     }
-})
+}
 
 function initInputHandling() {
     addEventListener("keydown", onKeyPress);
