@@ -159,7 +159,6 @@ const chart = {
         this.lanes.forEach(lane => {
             lane.notes.forEach(note => {
                 note.hitTime = note.hitBeat / (this.bpm / 60);
-                console.log(note.hitBeat = note.hitTime);
             })
         })
    }

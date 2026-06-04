@@ -1,4 +1,4 @@
-import chart from "../chart";
+import chart from "../chart/chart";
 import {getHitType, HitType} from "./hit-type";
 import {addToStatistics} from "./score";
 import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
