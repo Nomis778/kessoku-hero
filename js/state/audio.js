@@ -18,3 +18,7 @@ export function resetAudio() {
 export function getAudioTime() {
     return audio.currentTime;
 }
+
+export function addAudioListener(eventName, listener) {
+    audio.addEventListener(eventName, listener);
+}

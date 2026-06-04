@@ -241,6 +241,9 @@
   function getAudioTime() {
     return audio.currentTime;
   }
+  function addAudioListener(eventName, listener) {
+    audio.addEventListener(eventName, listener);
+  }
 
   // js/constants.js
   var NUM_LANES = 5;
@@ -303,6 +306,7 @@
     "numMediocre": 0,
     "numMiss": 0
   };
+  var highScore = 0;
   var onUpdateCallback = null;
   function addToStatistics(hitType) {
     statistics.totalHits++;
@@ -328,6 +332,14 @@
   }
   function getStatistics() {
     return Object.freeze({ ...statistics });
+  }
+  function checkAndSetHighScore() {
+    if (statistics.points > highScore)
+      highScore = statistics.points;
+    onUpdateCallback?.();
+  }
+  function getHighScore() {
+    return highScore;
   }
   function onStatisticsUpdate(callback) {
     onUpdateCallback = callback;
@@ -459,6 +471,7 @@
     const good = document.querySelector("#good");
     const mediocre = document.querySelector("#mediocre");
     const miss = document.querySelector("#miss");
+    const highScore2 = document.querySelector("#high-score");
     onStatisticsUpdate(function() {
       const stats = getStatistics();
       points.innerHTML = stats.points;
@@ -467,6 +480,7 @@
       good.innerHTML = `${stats.numGood} (${percentageOf(stats.numGood, total)}%)`;
       mediocre.innerHTML = `${stats.numMediocre} (${percentageOf(stats.numMediocre, total)}%)`;
       miss.innerHTML = `${stats.numMiss} (${percentageOf(stats.numMiss, total)}%)`;
+      highScore2.innerHTML = getHighScore();
     });
     function percentageOf(numerator, denominator) {
       if (denominator === 0)
@@ -484,6 +498,8 @@
     initStatisticsListeners();
     initInputHandling();
     initGameLoop();
+    addAudioListener("ended", checkAndSetHighScore);
+    addAudioListener("ended", reset);
   }
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#reset").addEventListener("click", reset);

@@ -1,4 +1,4 @@
-import {getStatistics, onStatisticsUpdate} from "./stats";
+import {getHighScore, getStatistics, onStatisticsUpdate} from "./stats";
 
 export function initStatisticsListeners() {
     const points = document.querySelector("#points");
@@ -6,6 +6,7 @@ export function initStatisticsListeners() {
     const good = document.querySelector("#good");
     const mediocre = document.querySelector("#mediocre");
     const miss = document.querySelector("#miss");
+    const highScore = document.querySelector("#high-score");
 
     onStatisticsUpdate(function() {
         const stats = getStatistics()
@@ -16,6 +17,8 @@ export function initStatisticsListeners() {
         good.innerHTML = `${stats.numGood} (${percentageOf(stats.numGood, total)}%)`;
         mediocre.innerHTML = `${stats.numMediocre} (${percentageOf(stats.numMediocre, total)}%)`;
         miss.innerHTML = `${stats.numMiss} (${percentageOf(stats.numMiss, total)}%)`;
+
+        highScore.innerHTML = getHighScore();
     })
 
     function percentageOf(numerator, denominator) {

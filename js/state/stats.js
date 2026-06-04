@@ -10,6 +10,8 @@ const statistics = {
     "numMiss": 0
 };
 
+let highScore = 0;
+
 let onUpdateCallback = null;
 
 export function addToStatistics(hitType) {
@@ -38,6 +40,16 @@ export function addToStatistics(hitType) {
 
 export function getStatistics() {
     return Object.freeze({...statistics});
+}
+
+export function checkAndSetHighScore() {
+    if(statistics.points > highScore)
+        highScore = statistics.points;
+    onUpdateCallback?.();
+}
+
+export function getHighScore() {
+    return highScore;
 }
 
 export function onStatisticsUpdate(callback) {

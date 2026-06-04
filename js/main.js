@@ -1,10 +1,10 @@
-import {getAudioTime, pauseAudio, playAudio, resetAudio} from "./state/audio.js";
+import {addAudioListener, getAudioTime, pauseAudio, playAudio, resetAudio} from "./state/audio.js";
 import updateCanvas from "./graphics/render";
 import {registerHit, resetNotes, updateNotes} from "./state/notes";
 import {KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
 import {initStatisticsListeners} from "./state/stats-ui";
-import {resetStatistics} from "./state/stats";
+import {checkAndSetHighScore, resetStatistics} from "./state/stats";
 
 init()
 
@@ -15,6 +15,9 @@ function init() {
     initStatisticsListeners();
     initInputHandling();
     initGameLoop();
+
+    addAudioListener("ended", checkAndSetHighScore);
+    addAudioListener("ended", reset);
 }
 
 document.querySelector("#start").addEventListener("click", start);
