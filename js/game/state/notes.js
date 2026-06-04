@@ -1,6 +1,6 @@
 import chart from "../chart";
 import {getHitType, HitType} from "./hit-type";
-import {addPoints} from "./score";
+import {addToStatistics} from "./score";
 import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
 
 // Each element is a list of notes in this lane
@@ -29,7 +29,7 @@ export function registerHit(hitTime, lane) {
     if (hitType !== HitType.MISS)
         removeNote(note, lane);
 
-    addPoints(hitType)
+    addToStatistics(hitType)
 }
 
 function spawnNotes(audioTime) {
@@ -45,7 +45,7 @@ function spawnNotes(audioTime) {
 function dropOldNotes(audioTime) {
     lanes.forEach(lane => {
         while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
-            addPoints(HitType.MISS);
+            addToStatistics(HitType.MISS);
             lane.shift();
         }}
     );

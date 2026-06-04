@@ -20,7 +20,6 @@ function onKeyPress(event) {
         return;
 
     registerHit(audioTime, lane);
-    console.log(getPoints());
 }
 
 let rafId = requestAnimationFrame(gameLoop);

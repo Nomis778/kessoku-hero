@@ -254,8 +254,7 @@
   var ALLOWED_DIFF = {
     "PERFECT": 0.1,
     "GOOD": 0.3,
-    "MEDIOCRE": 0.5,
-    "MISS": 2
+    "MEDIOCRE": 0.5
   };
   Object.freeze(ALLOWED_DIFF);
   var REWARD = {
@@ -281,31 +280,40 @@
       return HitType.GOOD;
     } else if (diff < ALLOWED_DIFF.MEDIOCRE) {
       return HitType.MEDIOCRE;
-    } else if (diff < ALLOWED_DIFF.MISS) {
+    } else {
       return HitType.MISS;
     }
   }
 
   // js/game/state/score.js
-  var totalPoints = 0;
-  function addPoints(hitType) {
+  var statistics = {
+    "points": 0,
+    "totalHits": 0,
+    "numPerfect": 0,
+    "numGood": 0,
+    "numMediocre": 0,
+    "numMiss": 0
+  };
+  function addToStatistics(hitType) {
+    statistics.totalHits++;
     switch (hitType) {
       case HitType.PERFECT:
-        totalPoints += REWARD.PERFECT;
+        statistics.points += REWARD.PERFECT;
+        statistics.numPerfect++;
         break;
       case HitType.GOOD:
-        totalPoints += REWARD.GOOD;
+        statistics.points += REWARD.GOOD;
+        statistics.numGood++;
         break;
       case HitType.MEDIOCRE:
-        totalPoints += REWARD.MEDIOCRE;
+        statistics.points += REWARD.MEDIOCRE;
+        statistics.numMediocre++;
         break;
       case HitType.MISS:
-        totalPoints += REWARD.MISS;
+        statistics.points += REWARD.MISS;
+        statistics.numMiss++;
         break;
     }
-  }
-  function getPoints() {
-    return totalPoints;
   }
 
   // js/game/state/notes.js
@@ -328,7 +336,7 @@
     const hitType = getHitType(diff);
     if (hitType !== HitType.MISS)
       removeNote(note, lane);
-    addPoints(hitType);
+    addToStatistics(hitType);
   }
   function spawnNotes(audioTime) {
     for (let i = 0; i < chart_default.lanes.length; i++) {
@@ -343,7 +351,7 @@
     lanes.forEach(
       (lane) => {
         while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
-          addPoints(HitType.MISS);
+          addToStatistics(HitType.MISS);
           lane.shift();
         }
       }
@@ -431,7 +439,6 @@
     if (lane === void 0)
       return;
     registerHit(audioTime, lane);
-    console.log(getPoints());
   }
   var rafId = requestAnimationFrame(gameLoop);
   function gameLoop() {
