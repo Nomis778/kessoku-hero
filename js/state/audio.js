@@ -1,4 +1,6 @@
-const audio = new Audio("../resources/audio/seishun.mp3");
+import chart from "../chart/chart";
+
+const audio = new Audio(chart.source);
 
 export function playAudio() {
     audio.play();
@@ -9,7 +11,6 @@ export function pauseAudio() {
 }
 
 export function restartAudio() {
-    console.log("restart audio");
     audio.pause()
     audio.currentTime = 0;
     audio.play();

@@ -16,6 +16,7 @@ class Lane {
 
 const chart = {
     "bpm": 190,
+    "source": "../resources/audio/seishun.mp3",
     "lanes": [
         new Lane([
             // Intro
