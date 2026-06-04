@@ -31,7 +31,6 @@ export const ALLOWED_DIFF = {
     "PERFECT": 0.1,
     "GOOD": 0.3,
     "MEDIOCRE": 0.5,
-    "MISS": 2
 }
 Object.freeze(ALLOWED_DIFF);
 

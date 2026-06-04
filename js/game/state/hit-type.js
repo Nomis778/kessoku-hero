@@ -15,7 +15,7 @@ export function getHitType(diff) {
         return HitType.GOOD;
     } else if (diff < ALLOWED_DIFF.MEDIOCRE) {
         return HitType.MEDIOCRE;
-    } else if (diff < ALLOWED_DIFF.MISS) {
+    } else {
         return HitType.MISS;
     }
 }
