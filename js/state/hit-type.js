@@ -3,7 +3,7 @@ import {ALLOWED_DIFF} from "../constants";
 export const HitType = {
     PERFECT: 1,
     GOOD: 2,
-    MEDIOCRE: 3,
+    OK: 3,
     MISS: 4
 }
 Object.freeze(HitType)
@@ -13,8 +13,8 @@ export function getHitType(diff) {
         return HitType.PERFECT;
     } else if (diff < ALLOWED_DIFF.GOOD) {
         return HitType.GOOD;
-    } else if (diff < ALLOWED_DIFF.MEDIOCRE) {
-        return HitType.MEDIOCRE;
+    } else if (diff < ALLOWED_DIFF.OK) {
+        return HitType.OK;
     } else {
         return HitType.MISS;
     }

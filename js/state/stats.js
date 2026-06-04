@@ -6,7 +6,7 @@ const statistics = {
     "totalHits": 0,
     "numPerfect": 0,
     "numGood": 0,
-    "numMediocre": 0,
+    "numOk": 0,
     "numMiss": 0
 };
 
@@ -25,9 +25,9 @@ export function addToStatistics(hitType) {
             statistics.points += REWARD.GOOD;
             statistics.numGood++;
             break;
-        case HitType.MEDIOCRE:
-            statistics.points += REWARD.MEDIOCRE;
-            statistics.numMediocre++;
+        case HitType.OK:
+            statistics.points += REWARD.OK;
+            statistics.numOk++;
             break;
         case HitType.MISS:
             statistics.points += REWARD.MISS;

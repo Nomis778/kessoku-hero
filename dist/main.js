@@ -266,13 +266,13 @@
   var ALLOWED_DIFF = {
     "PERFECT": 0.035,
     "GOOD": 0.1,
-    "MEDIOCRE": 0.3
+    "OK": 0.3
   };
   Object.freeze(ALLOWED_DIFF);
   var REWARD = {
     "PERFECT": 400,
     "GOOD": 200,
-    "MEDIOCRE": 100,
+    "OK": 100,
     "MISS": -100
   };
   Object.freeze(REWARD);
@@ -281,7 +281,7 @@
   var HitType = {
     PERFECT: 1,
     GOOD: 2,
-    MEDIOCRE: 3,
+    OK: 3,
     MISS: 4
   };
   Object.freeze(HitType);
@@ -290,8 +290,8 @@
       return HitType.PERFECT;
     } else if (diff < ALLOWED_DIFF.GOOD) {
       return HitType.GOOD;
-    } else if (diff < ALLOWED_DIFF.MEDIOCRE) {
-      return HitType.MEDIOCRE;
+    } else if (diff < ALLOWED_DIFF.OK) {
+      return HitType.OK;
     } else {
       return HitType.MISS;
     }
@@ -303,7 +303,7 @@
     "totalHits": 0,
     "numPerfect": 0,
     "numGood": 0,
-    "numMediocre": 0,
+    "numOk": 0,
     "numMiss": 0
   };
   var highScore = 0;
@@ -319,9 +319,9 @@
         statistics.points += REWARD.GOOD;
         statistics.numGood++;
         break;
-      case HitType.MEDIOCRE:
-        statistics.points += REWARD.MEDIOCRE;
-        statistics.numMediocre++;
+      case HitType.OK:
+        statistics.points += REWARD.OK;
+        statistics.numOk++;
         break;
       case HitType.MISS:
         statistics.points += REWARD.MISS;
@@ -464,12 +464,12 @@
     return CANVAS_PADDING + lane * LANE_WIDTH + NOTE_OFFSET;
   }
 
-  // js/state/stats-ui.js
+  // js/graphics/stats-ui.js
   function initStatisticsListeners() {
     const points = document.querySelector("#points");
     const perfect = document.querySelector("#perfect");
     const good = document.querySelector("#good");
-    const mediocre = document.querySelector("#mediocre");
+    const ok = document.querySelector("#ok");
     const miss = document.querySelector("#miss");
     const highScore2 = document.querySelector("#high-score");
     onStatisticsUpdate(function() {
@@ -478,7 +478,7 @@
       const total = stats.totalHits;
       perfect.innerHTML = `${stats.numPerfect} (${percentageOf(stats.numPerfect, total)}%)`;
       good.innerHTML = `${stats.numGood} (${percentageOf(stats.numGood, total)}%)`;
-      mediocre.innerHTML = `${stats.numMediocre} (${percentageOf(stats.numMediocre, total)}%)`;
+      ok.innerHTML = `${stats.numOk} (${percentageOf(stats.numOk, total)}%)`;
       miss.innerHTML = `${stats.numMiss} (${percentageOf(stats.numMiss, total)}%)`;
       highScore2.innerHTML = getHighScore();
     });

@@ -30,7 +30,7 @@ export const HIT_LINE_COLOR = "#9067C6"
 export const ALLOWED_DIFF = {
     "PERFECT": 0.035,
     "GOOD": 0.1,
-    "MEDIOCRE": 0.3,
+    "OK": 0.3,
 }
 Object.freeze(ALLOWED_DIFF);
 
@@ -38,7 +38,7 @@ Object.freeze(ALLOWED_DIFF);
 export const REWARD = {
     "PERFECT": 400,
     "GOOD": 200,
-    "MEDIOCRE": 100,
+    "OK": 100,
     "MISS": -100
 }
 Object.freeze(REWARD);
