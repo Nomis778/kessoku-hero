@@ -58,10 +58,12 @@ function initGameLoop() {
     // Pauses game if window is hidden
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
-            pauseAudio();
+            if (isStarted)
+                pauseAudio();
             cancelAnimationFrame(rafId);
         } else {
-            playAudio();
+            if (isStarted)
+                playAudio();
             rafId = requestAnimationFrame(gameLoop);
         }
     });

@@ -516,10 +516,12 @@
     let rafId = requestAnimationFrame(gameLoop);
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        pauseAudio();
+        if (isStarted)
+          pauseAudio();
         cancelAnimationFrame(rafId);
       } else {
-        playAudio();
+        if (isStarted)
+          playAudio();
         rafId = requestAnimationFrame(gameLoop);
       }
     });
