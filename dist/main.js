@@ -374,6 +374,10 @@
     addToStatistics(hitType);
   }
   function resetNotes() {
+    lanes = [];
+    for (let i = 0; i < NUM_LANES; i++) {
+      lanes[i] = [];
+    }
     chart_default.resetLanes();
   }
   function spawnNotes(audioTime) {

@@ -33,6 +33,10 @@ export function registerHit(hitTime, lane) {
 }
 
 export function resetNotes() {
+    lanes = [];
+    for (let i = 0; i < NUM_LANES; i++) {
+        lanes[i] = [];
+    }
     chart.resetLanes();
 }
 
