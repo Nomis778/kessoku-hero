@@ -1,0 +1,123 @@
+html {
+    font-size: clamp(14px, 1.7vw, 20px);
+    font-family: "Verdana", "Geneva", "Tahoma", Arial, sans-serif;
+}
+
+body {
+    background: url("../resources/img/starry.jpg") no-repeat;
+    background-size: 100% 100%;
+}
+
+.board {
+    margin: 0.75rem 3rem auto;
+    padding: 1.25rem 1rem;
+    border: 0.1rem solid #9067c6;
+    border-radius: 0.25rem;
+
+    background: rgba(10, 8, 20, 0.87);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    color: #c5bcd9;
+
+    & h2 {
+        margin: 0 0 0.5rem 0;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid rgba(197, 188, 217, 0.17);
+
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09rem;
+    }
+}
+
+#game {
+    & > canvas {
+        background: url("../resources/img/les-paul-neck.svg") no-repeat;
+        background-size: 100% 100%;
+    }
+}
+
+#score {
+    & > div { margin-bottom: 1.3rem; }
+    & > div:last-child { margin-bottom: 0; }
+
+    & ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    & li {
+        display: flex;
+        justify-content: space-between;
+
+        gap: 1rem;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        font-size: 0.75rem;
+    }
+
+    & li:last-child {
+        border-bottom: none;
+    }
+
+    & label {
+        color: rgba(197, 188, 217, 0.75);
+        letter-spacing: 0.05em;
+    }
+
+    & .points {
+        font-size: 1.7rem;
+        color: #ffe033;
+    }
+
+    & #perfect { color: #ff90d5; }
+    & #good { color: #34d399; }
+    & #ok { color: #3cb8fb; }
+    & #miss { color: #ff5555; }
+}
+
+#control {
+    & button {
+        margin-right: 0.2rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 0.2rem;
+
+        font-size: 0.75rem;
+        letter-spacing: 0.1rem;
+        text-transform: uppercase;
+
+        cursor: pointer;
+    }
+
+    & #start {
+        border: 1px solid rgba(250, 180, 30, 0.50);
+        background: linear-gradient(200deg, #ffe033 33%, #fab41e);
+        color: #0a0814;
+    }
+
+    & #reset {
+        border: 1px solid rgba(255, 255, 255, 0.50);
+        background: #2e2e2e;
+        color: #e8e0ff;
+    }
+}
+
+#keybind {
+    & kbd {
+        display: inline-flex;
+        width: 15%;
+        aspect-ratio: 1.5;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px inset #ffe033;
+        border-bottom: 3px inset #ffe033;
+        border-radius: 0.2rem;
+
+        font-size: 1.5rem;
+        background: #2e2e2e;
+        color: #e8e0ff;
+    }
+}

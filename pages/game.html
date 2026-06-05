@@ -2,27 +2,33 @@
 <head>
     <meta charset="UTF-8">
     <script src="../dist/main.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="../css/game.css?rnd=12345"/>
+    <link rel="stylesheet" type="text/css" href="../css/layout.css?rnd=12345"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css?rnd=12345"/>
     <title>Kessoku Hero</title>
 </head>
 <body>
-    <div id="control" class="board">
-        <h2>Control panel</h2>
-        <button id="start">Start</button>
-        <button id="reset">Reset</button>
+    <div id="left">
+        <div id="control" class="board">
+            <h2>Control panel</h2>
+            <button id="start">Start</button>
+            <button id="reset">Reset</button>
+        </div>
+        <div id="keybind" class="board">
+            <h2>Keybinds:</h2>
+            <kbd>W</kbd>
+            <kbd>S</kbd>
+            <kbd>D</kbd>
+            <kbd>←</kbd>
+            <kbd>↓</kbd>
+        </div>
     </div>
-    <div id="info" class="board">
-        <h2>Keybinds:</h2>
-        <kbd>W</kbd>
-        <kbd>S</kbd>
-        <kbd>D</kbd>
-        <kbd>←</kbd>
-        <kbd>↓</kbd>
+    <div id="game">
+        <canvas id="canvas"></canvas>
     </div>
     <div id="score" class="board">
         <div>
             <h2>Score:</h2>
-            <div id="points">0</div>
+            <div id="points" class="points">0</div>
         </div>
         <div>
             <h2>Stats:</h2>
@@ -47,9 +53,8 @@
         </div>
         <div>
             <h2>High Score:</h2>
-            <div id="high-score">0</div>
+            <div id="high-score" class="points">0</div>
         </div>
     </div>
-    <canvas id="canvas"></canvas>
 </body>
 </html>

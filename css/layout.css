@@ -1,0 +1,33 @@
+body {
+    display: grid;
+    grid-template-columns: 5fr 5fr 5fr;
+    grid-template-areas: "sidebar-left game sidebar-right";
+
+    overflow: hidden;
+
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+}
+
+#left {
+    grid-area: sidebar-left;
+}
+
+#game {
+    grid-area: game;
+
+    & > canvas {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+canvas {
+
+}
+
+#score {
+    grid-area: sidebar-right;
+}
