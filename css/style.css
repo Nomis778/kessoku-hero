@@ -50,6 +50,7 @@ body {
     & li {
         display: flex;
         justify-content: space-between;
+        align-items: baseline;
 
         gap: 1rem;
         padding: 0.25rem 0;
@@ -65,6 +66,10 @@ body {
     & label {
         color: rgba(197, 188, 217, 0.75);
         letter-spacing: 0.05em;
+    }
+
+    & li .stat {
+        font-size: 0.8rem;
     }
 
     & .points {
