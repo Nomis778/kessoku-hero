@@ -37,7 +37,7 @@
         // Verse 2
         { "hitBeat": 93.5, "holdBeat": 0.5 },
         { "hitBeat": 94.5 },
-        { "hitBeat": 102 },
+        { "hitBeat": 103 },
         { "hitBeat": 109.5, "holdBeat": 0.5 },
         { "hitBeat": 110.5 }
       ]),
@@ -71,10 +71,11 @@
         { "hitBeat": 93.5, "holdBeat": 0.5 },
         { "hitBeat": 97.5, "holdBeat": 0.5 },
         { "hitBeat": 98.5 },
-        { "hitBeat": 101.5 },
+        { "hitBeat": 102.5 },
         { "hitBeat": 105.5, "holdBeat": 0.5 },
         { "hitBeat": 106.5 },
         { "hitBeat": 109.5, "holdBeat": 0.5 },
+        { "hitBeat": 112, "holdBeat": 2 },
         // "Bridge"
         { "hitBeat": 121 },
         { "hitBeat": 123 }
@@ -98,8 +99,12 @@
         // Verse 2
         { "hitBeat": 89.5, "holdBeat": 0.5 },
         { "hitBeat": 97.5, "holdBeat": 0.5 },
-        { "hitBeat": 101 },
+        { "hitBeat": 102 },
         { "hitBeat": 105.5, "holdBeat": 0.5 },
+        { "hitBeat": 114, "holdBeat": 2 },
+        { "hitBeat": 117 },
+        { "hitBeat": 118 },
+        { "hitBeat": 119 },
         // "Bridge"
         { "hitBeat": 121 },
         { "hitBeat": 123 }
@@ -125,11 +130,14 @@
         { "hitBeat": 93 },
         { "hitBeat": 96, "holdBeat": 0.5 },
         { "hitBeat": 97 },
-        { "hitBeat": 100.5 },
+        { "hitBeat": 101.5 },
         { "hitBeat": 104, "holdBeat": 0.5 },
         { "hitBeat": 105 },
         { "hitBeat": 108, "holdBeat": 0.5 },
         { "hitBeat": 109 },
+        { "hitBeat": 116.5 },
+        { "hitBeat": 117.5 },
+        { "hitBeat": 118.5 },
         // "Bridge"
         { "hitBeat": 120 },
         { "hitBeat": 122 }
@@ -201,9 +209,10 @@
         { "hitBeat": 92, "holdBeat": 0.5 },
         { "hitBeat": 96, "holdBeat": 0.5 },
         { "hitBeat": 100 },
-        { "hitBeat": 102.5 },
+        { "hitBeat": 101 },
         { "hitBeat": 104, "holdBeat": 0.5 },
         { "hitBeat": 108, "holdBeat": 0.5 },
+        { "hitBeat": 116 },
         // "Bridge"
         { "hitBeat": 120 },
         { "hitBeat": 122 }
