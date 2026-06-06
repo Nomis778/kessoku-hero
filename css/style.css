@@ -84,6 +84,13 @@ body {
 }
 
 #control {
+    & #song {
+        margin: 1rem 0;
+
+        font-size: 1.05rem;
+        letter-spacing: 0.05rem;
+    }
+
     & button {
         margin-right: 0.2rem;
         padding: 0.3rem 0.8rem;
