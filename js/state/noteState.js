@@ -1,13 +1,29 @@
 import {getHitType, HitType} from "./hit-type";
 import {addToStatistics} from "./stats";
 import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
-import {getCurrentChart, rewindChart} from "../chart/chart";
+import {getCurrentChart} from "../chart/chart";
 
-// Each element is a list of notes in this lane
-let lanes = [];
-for (let i = 0; i < NUM_LANES; i++) {
-    lanes[i] = [];
+class ChartLane {
+    index = 0;
+
+    constructor(notes) {
+        if(!notes)
+            this.notes = []
+        else
+            this.notes = notes;
+    };
+
+    next() {
+        return this.notes[this.index]
+    }
+
+    incrementIndex() {
+        this.index++
+    }
 }
+
+let currentLanes = [];
+let chartLanes = [];
 
 export function updateNotes(audioTime) {
     spawnNotes(audioTime);
@@ -15,7 +31,7 @@ export function updateNotes(audioTime) {
 }
 
 export function getCurrentLanes() {
-    return lanes;
+    return currentLanes;
 }
 
 export function registerHit(hitTime, lane) {
@@ -33,29 +49,29 @@ export function registerHit(hitTime, lane) {
 }
 
 export function resetNotes() {
-    lanes = [];
+    loadNotes();
+}
+
+export function loadNotes() {
+    const chart = getCurrentChart();
     for (let i = 0; i < NUM_LANES; i++) {
-        lanes[i] = [];
+        currentLanes[i] = [];
+        chartLanes[i] = new ChartLane(chart.lanes[i]);
     }
-    rewindChart();
 }
 
 function spawnNotes(audioTime) {
-    const chart = getCurrentChart();
-    if(!chart)
-        return;
-
-    for (let i = 0; i < chart.lanes.length; i++) {
-        const lane = chart.lanes[i];
+    for (let i = 0; i < chartLanes.length; i++) {
+        const lane = chartLanes[i];
         if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-            lanes[i].push(lane.next());
+            currentLanes[i].push(lane.next());
             lane.incrementIndex();
         }
     }
 }
 
 function dropOldNotes(audioTime) {
-    lanes.forEach(lane => {
+    currentLanes.forEach(lane => {
         while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
             addToStatistics(HitType.MISS);
             lane.shift();
@@ -66,7 +82,7 @@ function dropOldNotes(audioTime) {
 function getClosestNote(audioTime, lane) {
     let closest = null;
     let closestDiff = Number.MAX_VALUE;
-    lanes[lane].forEach(note => {
+    currentLanes[lane].forEach(note => {
         const diff = Math.abs(note.hitTime - audioTime);
         if (diff < closestDiff) {
             closest = note;
@@ -77,5 +93,5 @@ function getClosestNote(audioTime, lane) {
 }
 
 function removeNote(note, lane) {
-    lanes[lane].splice(lanes[lane].indexOf(note), 1);
+    currentLanes[lane].splice(currentLanes[lane].indexOf(note), 1);
 }

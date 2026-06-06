@@ -1,20 +1,5 @@
 import {setAudioSource} from "../state/audio";
-
-class Lane {
-    index = 0;
-
-    constructor(notes) {
-        this.notes = notes;
-    };
-
-    next() {
-        return this.notes[this.index]
-    }
-
-    incrementIndex() {
-        this.index++
-    }
-}
+import {loadNotes} from "../state/noteState";
 
 let chart;
 
@@ -24,27 +9,19 @@ export function loadChart(url) {
     fetch(url)
         .then(response => response.json()
         .then(data => {
-            chart = {
-                ...data,
-                lanes: data.lanes.map(lane => new Lane(lane))
-            }
+            chart = data;
 
             // Translates the chart from beats into audioTime, which is used by the game
             chart.lanes.forEach(lane => {
-                lane.notes.forEach(note => {
+                lane.forEach(note => {
                     note.hitTime = chart.startTimeSeconds + (note.hitBeat / (chart.bpm / 60));
                 })
             })
 
             setAudioSource(chart.source);
+            loadNotes();
             songLabel.innerHTML = `${chart.band} - ${chart.name}`;
         }))
-}
-
-export function rewindChart() {
-    chart.lanes.forEach(lane => {
-        lane.index = 0;
-    })
 }
 
 export function getCurrentChart() {

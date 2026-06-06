@@ -134,10 +134,33 @@
   }
 
   // js/chart/chart.js
-  var Lane = class {
+  var chart;
+  var songLabel = document.querySelector("#song");
+  function loadChart(url) {
+    fetch(url).then((response) => response.json().then((data) => {
+      chart = data;
+      chart.lanes.forEach((lane) => {
+        lane.forEach((note) => {
+          note.hitTime = chart.startTimeSeconds + note.hitBeat / (chart.bpm / 60);
+        });
+      });
+      setAudioSource(chart.source);
+      loadNotes();
+      songLabel.innerHTML = `${chart.band} - ${chart.name}`;
+    }));
+  }
+  function getCurrentChart() {
+    return chart;
+  }
+
+  // js/state/noteState.js
+  var ChartLane = class {
     index = 0;
     constructor(notes) {
-      this.notes = notes;
+      if (!notes)
+        this.notes = [];
+      else
+        this.notes = notes;
     }
     next() {
       return this.notes[this.index];
@@ -146,43 +169,14 @@
       this.index++;
     }
   };
-  var chart;
-  var songLabel = document.querySelector("#song");
-  function loadChart(url) {
-    fetch(url).then((response) => response.json().then((data) => {
-      chart = {
-        ...data,
-        lanes: data.lanes.map((lane) => new Lane(lane))
-      };
-      chart.lanes.forEach((lane) => {
-        lane.notes.forEach((note) => {
-          note.hitTime = chart.startTimeSeconds + note.hitBeat / (chart.bpm / 60);
-        });
-      });
-      setAudioSource(chart.source);
-      songLabel.innerHTML = `${chart.band} - ${chart.name}`;
-    }));
-  }
-  function rewindChart() {
-    chart.lanes.forEach((lane) => {
-      lane.index = 0;
-    });
-  }
-  function getCurrentChart() {
-    return chart;
-  }
-
-  // js/state/notes.js
-  var lanes = [];
-  for (let i = 0; i < NUM_LANES; i++) {
-    lanes[i] = [];
-  }
+  var currentLanes = [];
+  var chartLanes = [];
   function updateNotes(audioTime) {
     spawnNotes(audioTime);
     dropOldNotes(audioTime);
   }
   function getCurrentLanes() {
-    return lanes;
+    return currentLanes;
   }
   function registerHit(hitTime, lane) {
     const note = getClosestNote(hitTime, lane);
@@ -195,26 +189,26 @@
     addToStatistics(hitType);
   }
   function resetNotes() {
-    lanes = [];
+    loadNotes();
+  }
+  function loadNotes() {
+    const chart2 = getCurrentChart();
     for (let i = 0; i < NUM_LANES; i++) {
-      lanes[i] = [];
+      currentLanes[i] = [];
+      chartLanes[i] = new ChartLane(chart2.lanes[i]);
     }
-    rewindChart();
   }
   function spawnNotes(audioTime) {
-    const chart2 = getCurrentChart();
-    if (!chart2)
-      return;
-    for (let i = 0; i < chart2.lanes.length; i++) {
-      const lane = chart2.lanes[i];
+    for (let i = 0; i < chartLanes.length; i++) {
+      const lane = chartLanes[i];
       if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
-        lanes[i].push(lane.next());
+        currentLanes[i].push(lane.next());
         lane.incrementIndex();
       }
     }
   }
   function dropOldNotes(audioTime) {
-    lanes.forEach(
+    currentLanes.forEach(
       (lane) => {
         while (lane.length && lane[0].hitTime + DROP_AFTER_SECONDS < audioTime) {
           addToStatistics(HitType.MISS);
@@ -226,7 +220,7 @@
   function getClosestNote(audioTime, lane) {
     let closest = null;
     let closestDiff = Number.MAX_VALUE;
-    lanes[lane].forEach((note) => {
+    currentLanes[lane].forEach((note) => {
       const diff = Math.abs(note.hitTime - audioTime);
       if (diff < closestDiff) {
         closest = note;
@@ -236,7 +230,7 @@
     return closest;
   }
   function removeNote(note, lane) {
-    lanes[lane].splice(lanes[lane].indexOf(note), 1);
+    currentLanes[lane].splice(currentLanes[lane].indexOf(note), 1);
   }
 
   // js/graphics/layout.js
@@ -275,9 +269,9 @@
   }
   function drawNotes(audioTime) {
     ctx.fillStyle = NOTE_COLOR;
-    const lanes2 = getCurrentLanes();
-    for (let i = 0; i < lanes2.length; i++) {
-      lanes2[i].forEach((note) => {
+    const lanes = getCurrentLanes();
+    for (let i = 0; i < lanes.length; i++) {
+      lanes[i].forEach((note) => {
         const currFallTime = note.hitTime - audioTime - FALL_TIME_SECONDS;
         const currFallPercent = currFallTime / FALL_TIME_SECONDS;
         ctx.fillRect(getLaneX(i), -(currFallPercent * HIT_Y), NOTE_WIDTH, NOTE_HEIGHT);
