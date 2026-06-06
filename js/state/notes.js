@@ -1,7 +1,7 @@
-import chart from "../chart/chart";
 import {getHitType, HitType} from "./hit-type";
 import {addToStatistics} from "./stats";
 import {DROP_AFTER_SECONDS, NUM_LANES, SPAWN_BEFORE_SECONDS} from "../constants";
+import {getCurrentChart, rewindChart} from "../chart/chart";
 
 // Each element is a list of notes in this lane
 let lanes = [];
@@ -37,10 +37,14 @@ export function resetNotes() {
     for (let i = 0; i < NUM_LANES; i++) {
         lanes[i] = [];
     }
-    chart.resetLanes();
+    rewindChart();
 }
 
 function spawnNotes(audioTime) {
+    const chart = getCurrentChart();
+    if(!chart)
+        return;
+
     for (let i = 0; i < chart.lanes.length; i++) {
         const lane = chart.lanes[i];
         if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
@@ -68,7 +72,7 @@ function getClosestNote(audioTime, lane) {
             closest = note;
             closestDiff = diff;
         }
-    })
+    });
     return closest;
 }
 

@@ -5,22 +5,21 @@ import {KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
 import {initStatisticsListeners} from "./graphics/stats-ui";
 import {checkAndSetHighScore, resetStatistics} from "./state/stats";
-import chart from "./chart/chart";
+import {loadChart} from "./chart/chart";
 
 init()
 
 function init() {
-    chart.load();
-
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
+
+    loadChart("../resources/charts/seishun.json");
+    addAudioListener("ended", checkAndSetHighScore);
+    addAudioListener("ended", reset);
 
     initStatisticsListeners();
     initInputHandling();
     initGameLoop();
-
-    addAudioListener("ended", checkAndSetHighScore);
-    addAudioListener("ended", reset);
 }
 
 document.querySelector("#start").addEventListener("click", start);
@@ -46,16 +45,17 @@ function reset() {
 }
 
 function initInputHandling() {
-    addEventListener("keydown", onKeyPress);
+    addEventListener("keydown", event => {
+        if(!isStarted)
+            return;
 
-    function onKeyPress(event) {
         const audioTime = getAudioTime();
         const lane = KEYBINDS[event.key];
         if (lane === undefined)
             return;
 
         registerHit(audioTime, lane);
-    }
+    });
 }
 
 function initGameLoop() {

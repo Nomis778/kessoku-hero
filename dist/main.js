@@ -1,248 +1,13 @@
 (() => {
-  // js/chart/chart.js
-  var songLabel = document.querySelector("#song");
-  var Lane = class {
-    index = 0;
-    constructor(notes) {
-      this.notes = notes;
-    }
-    next() {
-      return this.notes[this.index];
-    }
-    incrementIndex() {
-      this.index++;
-    }
-  };
-  var chart = {
-    "band": "kessoku band",
-    "name": "\u9752\u6625\u30B3\u30F3\u30D7\u30EC\u30C3\u30AF\u30B9",
-    "bpm": 190,
-    "source": "../resources/audio/seishun.mp3",
-    // Useful to create space before song starts.
-    // Audio file needs to match this value.
-    "startTimeSeconds": 0,
-    "lanes": [
-      new Lane([
-        // Intro
-        { "hitBeat": 13.5 },
-        { "hitBeat": 15.5 },
-        { "hitBeat": 21.5 },
-        { "hitBeat": 29.5 },
-        { "hitBeat": 31.5 },
-        { "hitBeat": 36.5 },
-        { "hitBeat": 38 },
-        // Verse
-        { "hitBeat": 45.5 },
-        { "hitBeat": 47.5 },
-        { "hitBeat": 53.5 },
-        { "hitBeat": 61.5 },
-        { "hitBeat": 63.5 },
-        // Verse lick
-        { "hitBeat": 80.5 },
-        { "hitBeat": 83 },
-        // Verse 2
-        { "hitBeat": 93.5, "holdBeat": 0.5 },
-        { "hitBeat": 94.5 },
-        { "hitBeat": 103 },
-        { "hitBeat": 109.5, "holdBeat": 0.5 },
-        { "hitBeat": 110.5 }
-      ]),
-      new Lane([
-        // Intro
-        { "hitBeat": 14 },
-        { "hitBeat": 15 },
-        { "hitBeat": 22, "holdBeat": 1 },
-        { "hitBeat": 30 },
-        { "hitBeat": 31 },
-        { "hitBeat": 36.5 },
-        { "hitBeat": 37.5 },
-        { "hitBeat": 38.5 },
-        // Verse
-        { "hitBeat": 46 },
-        { "hitBeat": 47 },
-        { "hitBeat": 54, "holdBeat": 1 },
-        { "hitBeat": 62 },
-        { "hitBeat": 63 },
-        // Verse lick
-        { "hitBeat": 73.5 },
-        { "hitBeat": 75 },
-        { "hitBeat": 75.5 },
-        { "hitBeat": 76.5 },
-        { "hitBeat": 77.5 },
-        { "hitBeat": 80 },
-        { "hitBeat": 81 },
-        // Verse 2
-        { "hitBeat": 89.5, "holdBeat": 0.5 },
-        { "hitBeat": 90.5 },
-        { "hitBeat": 93.5, "holdBeat": 0.5 },
-        { "hitBeat": 97.5, "holdBeat": 0.5 },
-        { "hitBeat": 98.5 },
-        { "hitBeat": 102.5 },
-        { "hitBeat": 105.5, "holdBeat": 0.5 },
-        { "hitBeat": 106.5 },
-        { "hitBeat": 109.5, "holdBeat": 0.5 },
-        { "hitBeat": 112, "holdBeat": 2 },
-        // "Bridge"
-        { "hitBeat": 121 },
-        { "hitBeat": 123 }
-      ]),
-      new Lane([
-        //Intro
-        { "hitBeat": 14.5 },
-        { "hitBeat": 30.5 },
-        { "hitBeat": 37 },
-        { "hitBeat": 39 },
-        // Verse
-        { "hitBeat": 46.5 },
-        { "hitBeat": 62.5 },
-        // Verse lick
-        { "hitBeat": 72 },
-        { "hitBeat": 72.5 },
-        { "hitBeat": 73 },
-        { "hitBeat": 74 },
-        { "hitBeat": 76 },
-        { "hitBeat": 82.5 },
-        // Verse 2
-        { "hitBeat": 89.5, "holdBeat": 0.5 },
-        { "hitBeat": 97.5, "holdBeat": 0.5 },
-        { "hitBeat": 102 },
-        { "hitBeat": 105.5, "holdBeat": 0.5 },
-        { "hitBeat": 114, "holdBeat": 2 },
-        { "hitBeat": 117 },
-        { "hitBeat": 118 },
-        { "hitBeat": 119 },
-        // "Bridge"
-        { "hitBeat": 121 },
-        { "hitBeat": 123 }
-      ]),
-      new Lane([
-        // Intro
-        { "hitBeat": 9.5 },
-        { "hitBeat": 17.5 },
-        { "hitBeat": 25.5 },
-        { "hitBeat": 33.5 },
-        // Verse
-        { "hitBeat": 41.5 },
-        { "hitBeat": 49.5 },
-        { "hitBeat": 57.5 },
-        { "hitBeat": 65.5 },
-        // Verse lick
-        { "hitBeat": 78 },
-        { "hitBeat": 79 },
-        // Verse 2
-        { "hitBeat": 88, "holdBeat": 0.5 },
-        { "hitBeat": 89 },
-        { "hitBeat": 92, "holdBeat": 0.5 },
-        { "hitBeat": 93 },
-        { "hitBeat": 96, "holdBeat": 0.5 },
-        { "hitBeat": 97 },
-        { "hitBeat": 101.5 },
-        { "hitBeat": 104, "holdBeat": 0.5 },
-        { "hitBeat": 105 },
-        { "hitBeat": 108, "holdBeat": 0.5 },
-        { "hitBeat": 109 },
-        { "hitBeat": 116.5 },
-        { "hitBeat": 117.5 },
-        { "hitBeat": 118.5 },
-        // "Bridge"
-        { "hitBeat": 120 },
-        { "hitBeat": 122 }
-      ]),
-      new Lane([
-        // Intro
-        { "hitBeat": 8 },
-        { "hitBeat": 8.5 },
-        { "hitBeat": 9 },
-        { "hitBeat": 9.5 },
-        { "hitBeat": 10.5 },
-        { "hitBeat": 11.5 },
-        { "hitBeat": 12.5 },
-        { "hitBeat": 16 },
-        { "hitBeat": 16.5 },
-        { "hitBeat": 17 },
-        { "hitBeat": 17.5 },
-        { "hitBeat": 18.5 },
-        { "hitBeat": 19.5 },
-        { "hitBeat": 20.5 },
-        { "hitBeat": 24 },
-        { "hitBeat": 24.5 },
-        { "hitBeat": 25 },
-        { "hitBeat": 25.5 },
-        { "hitBeat": 26.5 },
-        { "hitBeat": 27.5 },
-        { "hitBeat": 28.5 },
-        { "hitBeat": 32 },
-        { "hitBeat": 32.5 },
-        { "hitBeat": 33 },
-        { "hitBeat": 33.5 },
-        { "hitBeat": 34.5 },
-        { "hitBeat": 35.5 },
-        // Verse
-        { "hitBeat": 40 },
-        { "hitBeat": 40.5 },
-        { "hitBeat": 41 },
-        { "hitBeat": 41.5 },
-        { "hitBeat": 42.5 },
-        { "hitBeat": 43.5 },
-        { "hitBeat": 44.5 },
-        { "hitBeat": 48 },
-        { "hitBeat": 48.5 },
-        { "hitBeat": 49 },
-        { "hitBeat": 49.5 },
-        { "hitBeat": 50.5 },
-        { "hitBeat": 51.5 },
-        { "hitBeat": 52.5 },
-        { "hitBeat": 56 },
-        { "hitBeat": 56.5 },
-        { "hitBeat": 57 },
-        { "hitBeat": 57.5 },
-        { "hitBeat": 58.5 },
-        { "hitBeat": 59.5 },
-        { "hitBeat": 60.5 },
-        { "hitBeat": 64 },
-        { "hitBeat": 64.5 },
-        { "hitBeat": 65 },
-        { "hitBeat": 65.5 },
-        { "hitBeat": 66.5 },
-        { "hitBeat": 67.5 },
-        { "hitBeat": 68.5 },
-        // Verse lick
-        { "hitBeat": 78.5 },
-        { "hitBeat": 82 },
-        { "hitBeat": 84, "holdBeat": 2 },
-        // Verse 2
-        { "hitBeat": 88, "holdBeat": 0.5 },
-        { "hitBeat": 92, "holdBeat": 0.5 },
-        { "hitBeat": 96, "holdBeat": 0.5 },
-        { "hitBeat": 100 },
-        { "hitBeat": 101 },
-        { "hitBeat": 104, "holdBeat": 0.5 },
-        { "hitBeat": 108, "holdBeat": 0.5 },
-        { "hitBeat": 116 },
-        // "Bridge"
-        { "hitBeat": 120 },
-        { "hitBeat": 122 }
-      ])
-    ],
-    // Translates the chart from beats into audioTime, which is used by the game
-    "load": function() {
-      this.lanes.forEach((lane) => {
-        lane.notes.forEach((note) => {
-          note.hitTime = this.startTimeSeconds + note.hitBeat / (this.bpm / 60);
-        });
-      });
-      songLabel.innerHTML = `${this.band} - ${this.name}`;
-    },
-    "resetLanes": function() {
-      this.lanes.forEach((lane) => {
-        lane.index = 0;
-      });
-    }
-  };
-  var chart_default = chart;
-
   // js/state/audio.js
-  var audio = new Audio(chart_default.source);
+  var audio;
+  var listeners = [];
+  function setAudioSource(url) {
+    audio = new Audio(url);
+    listeners.forEach((listener) => {
+      audio.addEventListener(listener.eventName, listener.function);
+    });
+  }
   function playAudio() {
     audio.play();
   }
@@ -254,10 +19,12 @@
     audio.currentTime = 0;
   }
   function getAudioTime() {
-    return audio.currentTime;
+    return audio ? audio.currentTime : 0;
   }
   function addAudioListener(eventName, listener) {
-    audio.addEventListener(eventName, listener);
+    listeners.push({ "eventName": eventName, "function": listener });
+    if (audio != null)
+      audio.addEventListener(eventName, listener);
   }
 
   // js/constants.js
@@ -366,6 +133,45 @@
     onUpdateCallback?.();
   }
 
+  // js/chart/chart.js
+  var Lane = class {
+    index = 0;
+    constructor(notes) {
+      this.notes = notes;
+    }
+    next() {
+      return this.notes[this.index];
+    }
+    incrementIndex() {
+      this.index++;
+    }
+  };
+  var chart;
+  var songLabel = document.querySelector("#song");
+  function loadChart(url) {
+    fetch(url).then((response) => response.json().then((data) => {
+      chart = {
+        ...data,
+        lanes: data.lanes.map((lane) => new Lane(lane))
+      };
+      chart.lanes.forEach((lane) => {
+        lane.notes.forEach((note) => {
+          note.hitTime = chart.startTimeSeconds + note.hitBeat / (chart.bpm / 60);
+        });
+      });
+      setAudioSource(chart.source);
+      songLabel.innerHTML = `${chart.band} - ${chart.name}`;
+    }));
+  }
+  function rewindChart() {
+    chart.lanes.forEach((lane) => {
+      lane.index = 0;
+    });
+  }
+  function getCurrentChart() {
+    return chart;
+  }
+
   // js/state/notes.js
   var lanes = [];
   for (let i = 0; i < NUM_LANES; i++) {
@@ -393,11 +199,14 @@
     for (let i = 0; i < NUM_LANES; i++) {
       lanes[i] = [];
     }
-    chart_default.resetLanes();
+    rewindChart();
   }
   function spawnNotes(audioTime) {
-    for (let i = 0; i < chart_default.lanes.length; i++) {
-      const lane = chart_default.lanes[i];
+    const chart2 = getCurrentChart();
+    if (!chart2)
+      return;
+    for (let i = 0; i < chart2.lanes.length; i++) {
+      const lane = chart2.lanes[i];
       if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
         lanes[i].push(lane.next());
         lane.incrementIndex();
@@ -512,14 +321,14 @@
   // js/main.js
   init();
   function init() {
-    chart_default.load();
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
+    loadChart("../resources/charts/seishun.json");
+    addAudioListener("ended", checkAndSetHighScore);
+    addAudioListener("ended", reset);
     initStatisticsListeners();
     initInputHandling();
     initGameLoop();
-    addAudioListener("ended", checkAndSetHighScore);
-    addAudioListener("ended", reset);
   }
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#reset").addEventListener("click", reset);
@@ -539,14 +348,15 @@
     }
   }
   function initInputHandling() {
-    addEventListener("keydown", onKeyPress);
-    function onKeyPress(event) {
+    addEventListener("keydown", (event) => {
+      if (!isStarted)
+        return;
       const audioTime = getAudioTime();
       const lane = KEYBINDS[event.key];
       if (lane === void 0)
         return;
       registerHit(audioTime, lane);
-    }
+    });
   }
   function initGameLoop() {
     let rafId = requestAnimationFrame(gameLoop);

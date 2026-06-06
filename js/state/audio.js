@@ -1,6 +1,14 @@
-import chart from "../chart/chart";
+let audio;
 
-const audio = new Audio(chart.source);
+let listeners = [];
+
+export function setAudioSource(url) {
+    audio = new Audio(url);
+
+    listeners.forEach(listener => {
+        audio.addEventListener(listener.eventName, listener.function);
+    })
+}
 
 export function playAudio() {
     audio.play();
@@ -16,9 +24,12 @@ export function resetAudio() {
 }
 
 export function getAudioTime() {
-    return audio.currentTime;
+    return audio ? audio.currentTime : 0;
 }
 
 export function addAudioListener(eventName, listener) {
-    audio.addEventListener(eventName, listener);
+    listeners.push({"eventName": eventName, "function": listener});
+
+    if(audio != null)
+        audio.addEventListener(eventName, listener);
 }
