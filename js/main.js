@@ -5,10 +5,13 @@ import {KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
 import {initStatisticsListeners} from "./graphics/stats-ui";
 import {checkAndSetHighScore, resetStatistics} from "./state/stats";
+import chart from "./chart/chart";
 
 init()
 
 function init() {
+    chart.load();
+
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
 

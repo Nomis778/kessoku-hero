@@ -1,5 +1,6 @@
 (() => {
   // js/chart/chart.js
+  var songLabel = document.querySelector("#song");
   var Lane = class {
     index = 0;
     constructor(notes) {
@@ -13,6 +14,8 @@
     }
   };
   var chart = {
+    "band": "kessoku band",
+    "name": "\u9752\u6625\u30B3\u30F3\u30D7\u30EC\u30C3\u30AF\u30B9",
     "bpm": 190,
     "source": "../resources/audio/seishun.mp3",
     // Useful to create space before song starts.
@@ -222,12 +225,13 @@
       ])
     ],
     // Translates the chart from beats into audioTime, which is used by the game
-    "init": function() {
+    "load": function() {
       this.lanes.forEach((lane) => {
         lane.notes.forEach((note) => {
           note.hitTime = this.startTimeSeconds + note.hitBeat / (this.bpm / 60);
         });
       });
+      songLabel.innerHTML = `${this.band} - ${this.name}`;
     },
     "resetLanes": function() {
       this.lanes.forEach((lane) => {
@@ -235,7 +239,6 @@
       });
     }
   };
-  chart.init();
   var chart_default = chart;
 
   // js/state/audio.js
@@ -509,6 +512,7 @@
   // js/main.js
   init();
   function init() {
+    chart_default.load();
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
     initStatisticsListeners();

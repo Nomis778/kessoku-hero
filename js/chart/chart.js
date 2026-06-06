@@ -1,3 +1,5 @@
+const songLabel = document.querySelector("#song");
+
 class Lane {
     index = 0;
 
@@ -15,6 +17,9 @@ class Lane {
 }
 
 const chart = {
+    "band": "kessoku band",
+    "name": "青春コンプレックス",
+
     "bpm": 190,
     "source": "../resources/audio/seishun.mp3",
 
@@ -165,12 +170,14 @@ const chart = {
     ],
 
     // Translates the chart from beats into audioTime, which is used by the game
-    "init": function() {
+    "load": function() {
         this.lanes.forEach(lane => {
             lane.notes.forEach(note => {
                 note.hitTime = this.startTimeSeconds + (note.hitBeat / (this.bpm / 60));
             })
         })
+
+        songLabel.innerHTML = `${this.band} - ${this.name}`;
    },
 
    "resetLanes": function() {
@@ -180,6 +187,5 @@ const chart = {
    }
 }
 
-chart.init();
 export default chart;
 
