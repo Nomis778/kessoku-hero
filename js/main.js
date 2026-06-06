@@ -1,7 +1,7 @@
 import {addAudioListener, getAudioTime, pauseAudio, playAudio, resetAudio} from "./state/audio.js";
 import updateCanvas from "./graphics/render";
 import {registerHit, resetNotes, updateNotes} from "./state/noteState";
-import {KEYBINDS} from "./constants";
+import {CHART_NAME, KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
 import {initStatisticsListeners} from "./graphics/stats-ui";
 import {checkAndSetHighScore, resetStatistics} from "./state/stats";
@@ -13,7 +13,7 @@ function init() {
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
 
-    loadChart("../resources/charts/seishun.json");
+    loadChart(CHART_NAME);
     addAudioListener("ended", checkAndSetHighScore);
     addAudioListener("ended", reset);
 

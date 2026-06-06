@@ -1,4 +1,5 @@
 // Game logic
+export const CHART_NAME = "seishun";
 export const NUM_LANES = 5;
 
 // Keys mapped to their respective lanes

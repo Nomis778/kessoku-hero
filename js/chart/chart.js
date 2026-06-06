@@ -5,8 +5,8 @@ let chart;
 
 const songLabel = document.querySelector("#song");
 
-export function loadChart(url) {
-    fetch(url)
+export function loadChart(name) {
+    fetch(`../resources/charts/${name}.json`)
         .then(response => response.json()
         .then(data => {
             chart = data;

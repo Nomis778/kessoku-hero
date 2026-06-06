@@ -28,6 +28,7 @@
   }
 
   // js/constants.js
+  var CHART_NAME = "seishun";
   var NUM_LANES = 5;
   var KEYBINDS = {
     "a": 0,
@@ -136,8 +137,8 @@
   // js/chart/chart.js
   var chart;
   var songLabel = document.querySelector("#song");
-  function loadChart(url) {
-    fetch(url).then((response) => response.json().then((data) => {
+  function loadChart(name) {
+    fetch(`../resources/charts/${name}.json`).then((response) => response.json().then((data) => {
       chart = data;
       chart.lanes.forEach((lane) => {
         lane.forEach((note) => {
@@ -317,7 +318,7 @@
   function init() {
     updateLayoutForCurrentWindowSize();
     initResizeListeners();
-    loadChart("../resources/charts/seishun.json");
+    loadChart(CHART_NAME);
     addAudioListener("ended", checkAndSetHighScore);
     addAudioListener("ended", reset);
     initStatisticsListeners();
