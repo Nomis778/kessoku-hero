@@ -1,0 +1,19 @@
+{
+  "band": "German Justin Bieber",
+  "name": "Auf uns",
+  "bpm": 128,
+
+  "source": "../resources/audio/placeholder.mp4",
+  "startTimeSeconds": 1,
+
+  "lanes": [
+    [
+    ],
+    [
+      {"hitBeat": 14}, {"hitBeat": 15}
+    ],
+    [
+      {"hitBeat": 14.5}, {"hitBeat": 30.5}
+    ]
+  ]
+}
