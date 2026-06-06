@@ -17,6 +17,10 @@ class Lane {
 const chart = {
     "bpm": 190,
     "source": "../resources/audio/seishun.mp3",
+
+    // Useful to create space before song starts.
+    // Audio file needs to match this value.
+    "startTimeSeconds": 0,
     "lanes": [
         new Lane([
             // Intro
@@ -160,11 +164,11 @@ const chart = {
         ]),
     ],
 
-    // Will translate the chart from beats into audioTime, which is used by the game
+    // Translates the chart from beats into audioTime, which is used by the game
     "init": function() {
         this.lanes.forEach(lane => {
             lane.notes.forEach(note => {
-                note.hitTime = note.hitBeat / (this.bpm / 60);
+                note.hitTime = this.startTimeSeconds + (note.hitBeat / (this.bpm / 60));
             })
         })
    },
