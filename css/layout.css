@@ -11,23 +11,13 @@ body {
     margin: 0;
 }
 
-#left {
-    grid-area: sidebar-left;
+#left { grid-area: sidebar-left; }
+
+#game { grid-area: game; }
+
+#game > canvas {
+    height: 100%;
+    width: 100%;
 }
 
-#game {
-    grid-area: game;
-
-    & > canvas {
-        height: 100%;
-        width: 100%;
-    }
-}
-
-canvas {
-
-}
-
-#score {
-    grid-area: sidebar-right;
-}
+#score { grid-area: sidebar-right; }

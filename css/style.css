@@ -18,118 +18,111 @@ body {
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     color: #c5bcd9;
-
-    & h2 {
-        margin: 0 0 0.5rem 0;
-        padding-bottom: 0.4rem;
-        border-bottom: 1px solid rgba(197, 188, 217, 0.17);
-
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.09rem;
-    }
 }
 
-#game {
-    & > canvas {
-        background: url("../resources/img/les-paul-neck.svg") no-repeat;
-        background-size: 100% 100%;
-    }
+.board h2 {
+    margin: 0 0 0.5rem 0;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(197, 188, 217, 0.17);
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09rem;
 }
 
-#score {
-    & > div { margin-bottom: 1.3rem; }
-    & > div:last-child { margin-bottom: 0; }
 
-    & ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    & li {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-
-        gap: 1rem;
-        padding: 0.25rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-        font-size: 0.75rem;
-    }
-
-    & li:last-child {
-        border-bottom: none;
-    }
-
-    & label {
-        color: rgba(197, 188, 217, 0.75);
-        letter-spacing: 0.05em;
-    }
-
-    & li .stat {
-        font-size: 0.8rem;
-    }
-
-    & .points {
-        font-size: 1.7rem;
-        color: #ffe033;
-    }
-
-    & #perfect { color: #ff90d5; }
-    & #good { color: #34d399; }
-    & #ok { color: #3cb8fb; }
-    & #miss { color: #ff5555; }
+#game > canvas {
+    background: url("../resources/img/les-paul-neck.svg") no-repeat;
+    background-size: 100% 100%;
 }
 
-#control {
-    & #song {
-        margin: 1rem 0;
 
-        font-size: 1.05rem;
-        letter-spacing: 0.05rem;
-    }
+#score > div { margin-bottom: 1.3rem; }
 
-    & button {
-        margin-right: 0.2rem;
-        padding: 0.3rem 0.8rem;
-        border-radius: 0.2rem;
+#score > div:last-child { margin-bottom: 0; }
 
-        font-size: 0.75rem;
-        letter-spacing: 0.1rem;
-        text-transform: uppercase;
-
-        cursor: pointer;
-    }
-
-    & #start {
-        border: 1px solid rgba(250, 180, 30, 0.50);
-        background: linear-gradient(200deg, #ffe033 33%, #fab41e);
-        color: #0a0814;
-    }
-
-    & #reset {
-        border: 1px solid rgba(255, 255, 255, 0.50);
-        background: #2e2e2e;
-        color: #e8e0ff;
-    }
+#score ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-#keybind {
-    & kbd {
-        display: inline-flex;
-        width: 15%;
-        aspect-ratio: 1.5;
-        align-items: center;
-        justify-content: center;
+#score li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 
-        border: 1px inset #ffe033;
-        border-bottom: 3px inset #ffe033;
-        border-radius: 0.2rem;
+    gap: 1rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
-        font-size: 1.5rem;
-        background: #2e2e2e;
-        color: #e8e0ff;
-    }
+    font-size: 0.75rem;
+}
+
+#score li:last-child { border-bottom: none; }
+
+#score label {
+    color: rgba(197, 188, 217, 0.75);
+    letter-spacing: 0.05em;
+}
+
+#score li .stat { font-size: 0.8rem; }
+
+#score .points {
+    font-size: 1.7rem;
+    color: #ffe033;
+}
+
+#score #perfect { color: #ff90d5; }
+#score #good { color: #34d399; }
+#score #ok { color: #3cb8fb; }
+#score #miss { color: #ff5555; }
+
+
+#control #song {
+    margin: 1rem 0;
+
+    font-size: 1.05rem;
+    letter-spacing: 0.05rem;
+}
+
+#control button {
+    margin-right: 0.2rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.2rem;
+
+    font-size: 0.75rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+#control #start {
+    border: 1px solid rgba(250, 180, 30, 0.50);
+    background: linear-gradient(200deg, #ffe033 33%, #fab41e);
+    color: #0a0814;
+}
+
+#control #reset {
+    border: 1px solid rgba(255, 255, 255, 0.50);
+    background: #2e2e2e;
+    color: #e8e0ff;
+}
+
+
+#keybind kbd {
+    display: inline-flex;
+    width: 15%;
+    aspect-ratio: 1.5;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px inset #ffe033;
+    border-bottom: 3px inset #ffe033;
+    border-radius: 0.2rem;
+
+    font-size: 1.5rem;
+    background: #2e2e2e;
+    color: #e8e0ff;
 }
