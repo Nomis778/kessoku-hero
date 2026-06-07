@@ -154,7 +154,7 @@
     return chart;
   }
 
-  // js/state/noteState.js
+  // js/state/note-state.js
   var ChartLane = class {
     index = 0;
     constructor(notes) {

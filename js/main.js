@@ -1,6 +1,6 @@
 import {addAudioListener, getAudioTime, pauseAudio, playAudio, resetAudio} from "./state/audio.js";
 import updateCanvas from "./graphics/render";
-import {registerHit, resetNotes, updateNotes} from "./state/noteState";
+import {registerHit, resetNotes, updateNotes} from "./state/note-state";
 import {CHART_NAME, KEYBINDS} from "./constants";
 import {initResizeListeners, updateLayoutForCurrentWindowSize} from "./graphics/layout";
 import {initStatisticsListeners} from "./graphics/stats-ui";

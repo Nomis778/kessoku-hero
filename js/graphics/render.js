@@ -1,4 +1,4 @@
-import {getCurrentLanes} from "../state/noteState";
+import {getCurrentLanes} from "../state/note-state";
 import {CANVAS_PADDING, HIT_Y, LANE_WIDTH, NOTE_HEIGHT, NOTE_OFFSET, NOTE_WIDTH} from "./layout";
 import {FALL_TIME_SECONDS, HIT_LINE_COLOR, NOTE_COLOR} from "../constants";
 

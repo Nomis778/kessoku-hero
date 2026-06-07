@@ -1,5 +1,5 @@
 import {setAudioSource} from "../state/audio";
-import {loadNotes} from "../state/noteState";
+import {loadNotes} from "../state/note-state";
 
 let chart;
 
