@@ -62,7 +62,7 @@ export function loadNotes() {
 function spawnNotes(audioTime) {
     for (let i = 0; i < chartLanes.length; i++) {
         const lane = chartLanes[i];
-        if (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
+        while (lane.next() && lane.next().hitTime <= audioTime + SPAWN_BEFORE_SECONDS) {
             currentLanes[i].push(lane.next());
             lane.incrementIndex();
         }
