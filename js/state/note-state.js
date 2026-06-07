@@ -36,9 +36,8 @@ export function getCurrentLanes() {
 
 export function registerHit(hitTime, lane) {
     const note = getClosestNote(hitTime, lane)
-    let diff = Number.MAX_VALUE;
-    if (note)
-        diff = Math.abs(note.hitTime - hitTime);
+
+    let diff = note? Math.abs(note.hitTime - hitTime) : Number.MAX_VALUE;
 
     const hitType = getHitType(diff)
 
